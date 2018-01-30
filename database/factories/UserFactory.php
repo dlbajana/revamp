@@ -17,9 +17,13 @@ $factory->define(App\User::class, function (Faker $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
+        'role_id' => 1,                         // We set the roles to 1 or admin for the mean time
+        'first_name' => $faker->firstName,
+        'middle_name' => $faker->lastName,
+        'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'username' => $faker->unique()->userName,
+        'password' => $password ?: $password = bcrypt('password'),
         'remember_token' => str_random(10),
     ];
 });
