@@ -18,7 +18,7 @@ class CreatePhysiciansTable extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
-            $table->string('name_extension')->nullable();
+            $table->string('suffix')->nullable();
             $table->string('mothers_maiden_name')->nullable();
             $table->string('nationality')->nullable();
             $table->date('birthday')->nullable();
@@ -49,7 +49,7 @@ class CreatePhysiciansTable extends Migration
             $table->string('prc_license_no')->nullable();
             $table->date('prc_validity_date')->nullable();
 
-            $table->text('remarks');
+            $table->text('remarks')->nullable();
             $table->integer('created_by');
             $table->timestamps();
         });

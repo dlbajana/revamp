@@ -65,7 +65,7 @@ class CreateCorporatesTable extends Migration
             $table->decimal('admin_fee', 10, 2)->default(0);
             $table->string('payment_setup')->nullable();
 
-            $table->text('remarks');
+            $table->text('remarks')->nullable();
             $table->integer('created_by');
             $table->timestamps();
         });
