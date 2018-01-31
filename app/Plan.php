@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Corporate;
+use App\PlanCoverage;
 
 class Plan extends Model
 {
@@ -19,5 +20,10 @@ class Plan extends Model
     public function corporate()
     {
         return $this->belongsTo(Corporate::class, 'corporate_id');
+    }
+
+    public function planCoverage()
+    {
+        return $this->hasOne(PlanCoverage::class, 'plan_id');
     }
 }
