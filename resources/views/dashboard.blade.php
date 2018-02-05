@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('nav_dashboard')
+    current_section
+@endsection
+
 @section('breadcrumbs')
     <div id="top_bar">
         <ul id="breadcrumbs">

@@ -211,7 +211,10 @@
                             <div class="uk-dropdown uk-dropdown-small">
                                 <ul class="uk-nav js-uk-prevent">
                                     <li><a href="page_user_profile.html">My profile</a></li>
-                                    <li><a href="login.html">Logout</a></li>
+                                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
                                 </ul>
                             </div>
                         </li>
@@ -236,60 +239,60 @@
 
         <div class="menu_section">
             <ul>
-                <li title="Dashboard">
+                <li class="@yield('nav_dashboard')" title="Dashboard">
                     <a href="{{ route('dashboard') }}">
                         <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
                         <span class="menu_title">Dashboard</span>
                     </a>
                 </li>
-                <li title="Mailbox">
+                <li class="@yield('nav_providers')" title="Providers">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE548;</i></span>
                         <span class="menu_title">Providers</span>
                     </a>
                 </li>
-                <li title="Invoices">
+                <li class="@yield('nav_physicians')" title="Physicians">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE85E;</i></span>
                         <span class="menu_title">Physicians</span>
                     </a>
                 </li>
-                <li title="Chats">
+                <li title="Corporate">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE0AF;</i></span>
                         <span class="menu_title">Corporate</span>
                     </a>
                     <ul>
-                        <li><a href="page_chat.html">Corporate</a></li>
-                        <li><a href="page_chat.html">Members</a></li>
-                        <li><a href="page_chat_small.html">Plans & Coverage</a></li>
+                        <li class="@yield('nav_corporate_corporate_accounts')"><a href="#">Corporate Accounts</a></li>
+                        <li class="@yield('nav_corporate_members')"><a href="#">Members</a></li>
+                        <li class="@yield('nav_corporate_plans')"><a href="#">Plans & Coverage</a></li>
                     </ul>
                 </li>
-                <li title="Invoices">
+                <li class="@yield('nav_ape_scheduler')" title="APE Scheduler">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE878;</i></span>
                         <span class="menu_title">APE Scheduler</span>
                     </a>
                 </li>
-                <li title="Invoices">
+                <li class="@yield('nav_transactions')" title="Transactions">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE913;</i></span>
                         <span class="menu_title">Transactions</span>
                     </a>
                 </li>
-                <li title="Invoices">
+                <li class="@yield('nav_claims')" title="Claims">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE850;</i></span>
                         <span class="menu_title">Claims</span>
                     </a>
                 </li>
-                <li title="User Profile">
-                    <a href="#">
+                <li class="@yield('nav_users_management')" title="User Management">
+                    <a href="{{ route('users.index') }}">
                         <span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>
                         <span class="menu_title">Users Management </span>
                     </a>
                 </li>
-                <li title="Sticky Notes">
+                <li class="@yield('nav_system_settings')" title="SystemSettings">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE8B8;</i></span>
                         <span class="menu_title">System Settings</span>
@@ -317,6 +320,8 @@
     <script src="/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="/js/altair_admin_common.min.js"></script>
+
+    @yield('scripts')
 
 </body>
 </html>

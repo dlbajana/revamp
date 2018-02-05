@@ -1,70 +1,91 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
-                        {{ csrf_field() }}
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+    <!-- uikit -->
+    <link rel="stylesheet" href="/bower_components/uikit/css/uikit.almost-flat.min.css"/>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+    <!-- altair admin login page -->
+    <link rel="stylesheet" href="/css/login_page.min.css" />
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+</head>
+<body class="login_page">
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+    <div class="login_page_wrapper">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+        <div class="md-card">
+            <div class="md-card-content large-padding">
+                <a href="{{ route('login') }}" class="uk-position-top-right uk-close uk-margin-right uk-margin-top back_to_login"></a>
+                <h2 class="heading_a uk-margin-large-bottom">Reset password</h2>
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                <form action="{{ route('password.request') }}" method="post">
+                    {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                    <input type="hidden" name="token" value="{{ $token }}">
 
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                    <div class="uk-form-row">
+                        <label for="login_email_reset">E-mail Address</label>
+                        <input class="md-input {{ $errors->has('email') ? ' md-input-danger' : '' }}" type="text" name="email" value="{{ $email or old('email') }}" required autofocus/>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Reset Password
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        @if ($errors->has('email'))
+                            <label class="uk-text-danger">
+                                {{ $errors->first('email') }}
+                            </label>
+                        @endif
+                    </div>
+
+                    <div class="uk-form-row">
+                        <label for="login_email_reset">Password</label>
+                        <input class="md-input {{ $errors->has('password') ? ' md-input-danger' : '' }}" type="password" name="password" required/>
+
+                        @if ($errors->has('password'))
+                            <label class="uk-text-danger">
+                                {{ $errors->first('password') }}
+                            </label>
+                        @endif
+                    </div>
+
+                    <div class="uk-form-row">
+                        <label for="login_email_reset">Confirm Password</label>
+                        <input class="md-input {{ $errors->has('password_confirmation') ? ' md-input-danger' : '' }}" type="password" name="password_confirmation" required/>
+
+                        @if ($errors->has('password_confirmation'))
+                            <label class="uk-text-danger">
+                                {{ $errors->first('password_confirmation') }}
+                            </label>
+                        @endif
+                    </div>
+
+                    <div class="uk-margin-medium-top">
+                        <button type="submit" class="md-btn md-btn-primary md-btn-block">
+                            Reset password
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
+
     </div>
-</div>
-@endsection
+
+    <!-- common functions -->
+    <script src="/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/js/uikit_custom.min.js"></script>
+    <!-- altair core functions -->
+    <script src="/js/altair_admin_common.min.js"></script>
+
+</body>
+</html>
