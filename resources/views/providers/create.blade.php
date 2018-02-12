@@ -130,6 +130,7 @@
                                     <select data-md-selectize name="accreditation_status" class="{{ $errors->has('accreditation_status') ? ' md-input-danger' : '' }}"  data-md-selectize-bottom data-uk-tooltip="{pos:'top'}" title="Accreditation Status">
                                         <option value="">Accreditation Status*...</option>
                                         <option value="accredited" @if(old('accreditation_status') == 'accredited') selected @endif>Accredited</option>
+                                        <option value="disaccredited" @if(old('accreditation_status') == 'disaccredited') selected @endif>Disaccredited</option>
                                         <option value="non-accredited" @if(old('accreditation_status') == 'non-accredited') selected @endif>Non-Accredited</option>
                                     </select>
                                     @if ($errors->has('accreditation_status'))

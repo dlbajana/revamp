@@ -136,9 +136,11 @@
                                         <option value="">Accreditation Status*...</option>
                                         @if (old('accreditation_status'))
                                             <option value="accredited" @if(old('accreditation_status') == 'accredited') selected @endif>Accredited</option>
+                                                <option value="disaccredited" @if(old('accreditation_status') == 'disaccredited') selected @endif>Disaccredited</option>
                                             <option value="non-accredited" @if(old('accreditation_status') == 'non-accredited') selected @endif>Non-Accredited</option>
                                         @else
                                             <option value="accredited" @if($provider->accreditation_status == 'accredited') selected @endif>Accredited</option>
+                                            <option value="disaccredited" @if($provider->accreditation_status == 'disaccredited') selected @endif>Disaccredited</option>
                                             <option value="non-accredited" @if($provider->accreditation_status == 'non-accredited') selected @endif>Non-Accredited</option>
                                         @endif
 
