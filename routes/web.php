@@ -10,3 +10,10 @@ Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 |--------------------------------------------------------------------------
 */
 Route::resource('users', 'UserController', ['except' => ['destroy']]);
+
+/*
+|--------------------------------------------------------------------------
+| PROVIDER MANAGEMENT
+|--------------------------------------------------------------------------
+*/
+Route::resource('providers', 'ProviderController', ['except' => ['destroy']]);

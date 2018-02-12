@@ -28,6 +28,8 @@
     <!-- themes -->
     <link rel="stylesheet" href="/css/themes/themes_combined.min.css" media="all">
 
+    @yield('styles')
+
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe header_full">
     <!-- main header -->
@@ -246,7 +248,7 @@
                     </a>
                 </li>
                 <li class="@yield('nav_providers')" title="Providers">
-                    <a href="#">
+                    <a href="{{ route('providers.index') }}">
                         <span class="menu_icon"><i class="material-icons">&#xE548;</i></span>
                         <span class="menu_title">Providers</span>
                     </a>

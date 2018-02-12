@@ -16,13 +16,13 @@ class CreateProviderContactDetailsTable extends Migration
         Schema::create('provider_contact_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('provider_id');
-            $table->string('name');
-            $table->string('designation');
-            $table->string('department');
-            $table->string('mobile_no');
-            $table->string('email');
-            $table->string('fax_no');
-            $table->string('telephone_no');
+            $table->string('name')->nullable();
+            $table->string('designation')->nullable();
+            $table->string('department')->nullable();
+            $table->string('mobile_no')->nullable();
+            $table->string('email')->nullable();
+            $table->string('fax_no')->nullable();
+            $table->string('telephone_no')->nullable();
             $table->timestamps();
         });
     }
