@@ -118,8 +118,8 @@
                             <input type="text" value="{{ strtoupper($provider->accreditation_status) }}" readonly class="md-input label-fixed" />
                         </div>
                         <div class="uk-width-1-4">
-                            <label>Top Hospital</label>
-                            <input type="text" value="{{ $provider->top_hospital ? "YES" : "NO" }}" readonly class="md-input label-fixed" />
+                            <label>Default Corporate No-Access</label>
+                            <input type="text" value="{{ $provider->default_corporate_no_access ? "YES" : "NO" }}" readonly class="md-input label-fixed" />
                         </div>
                         <div class="uk-width-1-4">
                             <label>Suspected Fraud</label>

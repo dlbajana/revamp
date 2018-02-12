@@ -25,7 +25,7 @@ class CreateProvidersTable extends Migration
             $table->tinyInteger('tax_exempt')->default(0);
             $table->tinyInteger('withheld')->default(0);
             $table->string('accreditation_status');
-            $table->tinyInteger('top_hospital')->default(0);
+            $table->tinyInteger('default_corporate_no_access')->default(0);
             $table->tinyInteger('suspected_fraud')->default(0);
 
             $table->string('bank_account_name')->nullable();

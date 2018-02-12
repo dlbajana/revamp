@@ -41,7 +41,7 @@ class Provider extends Model
     protected $casts = [
         'tax_exempt' => 'boolean',
         'withheld' => 'boolean',
-        'top_hospital' => 'boolean',
+        'default_corporate_no_access' => 'boolean',
         'suspected_fraud' => 'boolean',
         'prompt_payment_discount' => 'boolean',
         'ip_opd_or_whole' => 'boolean',
@@ -76,7 +76,7 @@ class Provider extends Model
             'withheld' => $request->withheld ?: 0,
             'accreditation_status' => $request->accreditation_status,
 
-            'top_hospital' => $request->top_hospital ?: 0,
+            'default_corporate_no_access' => $request->default_corporate_no_access ?: 0,
             'suspected_fraud' => $request->suspected_fraud ?: 0,
 
             'bank_account_name' => $request->bank_account_name,
@@ -205,7 +205,7 @@ class Provider extends Model
             'withheld' => $request->withheld ?: 0,
             'accreditation_status' => $request->accreditation_status,
 
-            'top_hospital' => $request->top_hospital ?: 0,
+            'default_corporate_no_access' => $request->default_corporate_no_access ?: 0,
             'suspected_fraud' => $request->suspected_fraud ?: 0,
 
             'bank_account_name' => $request->bank_account_name,

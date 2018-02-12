@@ -140,8 +140,8 @@
                             <div class="uk-grid uk-margin-medium-top">
                                 <div class="uk-width-medium-1-2">
                                     <p>
-                                        <input type="checkbox" name="top_hospital" value="1" id="check_top_hospital" data-md-icheck @if(old('top_hospital')) checked @endif/>
-                                        <label for="check_top_hospital" class="inline-label">Top Hospital <i class="material-icons" title="All Corporate Accounts will have no access to this provider by default unless explicitly specified.">&#xE887;</i></label>
+                                        <input type="checkbox" name="default_corporate_no_access" value="1" id="check_default_corporate_no_access" data-md-icheck @if(old('default_corporate_no_access')) checked @endif/>
+                                        <label for="check_default_corporate_no_access" class="inline-label">Default Corporate No-Access <i class="material-icons" title="All Corporate Accounts will have no access to this provider by default unless explicitly specified.">&#xE887;</i></label>
                                     </p>
                                     <p>
                                         <input type="checkbox" name="suspected_fraud" value="1" id="check_suspected_fraud" data-md-icheck @if(old('suspected_fraud')) checked @endif/>

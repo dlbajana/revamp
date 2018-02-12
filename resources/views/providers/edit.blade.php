@@ -152,11 +152,11 @@
                                 <div class="uk-width-medium-1-2">
                                     <p>
                                         @if ($errors->any())
-                                            <input type="checkbox" name="top_hospital" value="1" id="check_top_hospital" data-md-icheck @if(old('top_hospital')) checked @endif/>
+                                            <input type="checkbox" name="default_corporate_no_access" value="1" id="check_default_corporate_no_access" data-md-icheck @if(old('default_corporate_no_access')) checked @endif/>
                                         @else
-                                            <input type="checkbox" name="top_hospital" value="1" id="check_top_hospital" data-md-icheck @if($provider->top_hospital) checked @endif/>
+                                            <input type="checkbox" name="default_corporate_no_access" value="1" id="check_default_corporate_no_access" data-md-icheck @if($provider->default_corporate_no_access) checked @endif/>
                                         @endif
-                                        <label for="check_top_hospital" class="inline-label">Top Hospital <i class="material-icons" title="All Corporate Accounts will have no access to this provider by default unless explicitly specified.">&#xE887;</i></label>
+                                        <label for="check_default_corporate_no_access" class="inline-label">Top Hospital <i class="material-icons" title="All Corporate Accounts will have no access to this provider by default unless explicitly specified.">&#xE887;</i></label>
                                     </p>
                                     <p>
                                         @if ($errors->any())
