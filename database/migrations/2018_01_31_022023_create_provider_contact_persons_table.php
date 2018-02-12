@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProviderContactDetailsTable extends Migration
+class CreateProviderContactPersonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProviderContactDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('provider_contact_details', function (Blueprint $table) {
+        Schema::create('provider_contact_persons', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('provider_id');
             $table->string('name')->nullable();

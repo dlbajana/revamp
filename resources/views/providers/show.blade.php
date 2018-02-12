@@ -408,7 +408,7 @@
                     @php $departments = ['HMO / Industrial', 'Admitting', 'Emergency', 'Billing', 'Credit and Collection']; @endphp
                     @foreach ($departments as $key => $department)
                         @php
-                            $providerContactPerson = $provider->providerContactDetails->where('department', $department)->first();
+                            $providerContactPerson = $provider->providerContactPersons->where('department', $department)->first();
                         @endphp
                         <h3 class="heading_c uk-margin-medium-top uk-text-success uk-text-italic">{{ $department }}</h3>
                         <div class="uk-grid">

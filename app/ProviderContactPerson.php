@@ -5,9 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Provider;
 
-class ProviderContactDetail extends Model
+class ProviderContactPerson extends Model
 {
-    protected $table = 'provider_contact_details';
+    protected $table = 'provider_contact_persons';
     protected $guarded = [];
 
     public function provider()

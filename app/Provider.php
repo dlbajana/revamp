@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\User;
-use App\ProviderContactDetail;
+use App\ProviderContactPerson;
 use App\ProviderLog;
 
 class Provider extends Model
@@ -18,9 +18,9 @@ class Provider extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function providerContactDetails()
+    public function providerContactPersons()
     {
-        return $this->hasMany(ProviderContactDetail::class, 'provider_id');
+        return $this->hasMany(ProviderContactPerson::class, 'provider_id');
     }
 
     public function providerLogs()
@@ -179,7 +179,7 @@ class Provider extends Model
         ]);
 
         foreach ($request->contact_person_department as $key => $contactPersonDepartment) {
-            $provider->providerContactDetails()->create([
+            $provider->providerContactPersons()->create([
                 'name' => $request->contact_person_name[$key],
                 'designation' => $request->contact_person_designation[$key],
                 'department' => $contactPersonDepartment,
@@ -306,9 +306,9 @@ class Provider extends Model
         ]);
 
         foreach ($request->contact_person_department as $key => $contactPersonDepartment) {
-            $providerContactDetails = $this->providerContactDetails->where('department', $contactPersonDepartment)->first();
+            $providerContactPersons = $this->providerContactPersons->where('department', $contactPersonDepartment)->first();
 
-            optional($providerContactDetails)->update([
+            optional($providerContactPersons)->update([
                 'name' => $request->contact_person_name[$key],
                 'designation' => $request->contact_person_designation[$key],
                 'department' => $contactPersonDepartment,
