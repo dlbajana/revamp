@@ -22,9 +22,9 @@
                     <i class="md-icon material-icons md-icon-light">&#xE5D4;</i>
                     <div class="uk-dropdown uk-dropdown-small">
                         <ul class="uk-nav">
-                            <li><a href="#">Disaccredit</a></li>
-                            <li><a href="#">Suspend</a></li>
-                            <li><a href="#">Terminate</a></li>
+                            <li>
+                                <a href="#" data-uk-modal="{target:'#modal_update_status'}">Actions</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1362,6 +1362,63 @@
             </ul>
         </div>
     </div>
+
+    <div class="uk-modal" id="modal_update_status">
+        <div class="uk-modal-dialog">
+            <form action="{{ route('providers.action', $provider->id) }}" method="post">
+                {{ csrf_field() }}
+                <div class="uk-modal-header">
+                    <h3 class="uk-modal-title">Update Status</h3>
+                </div>
+                <p>
+                    You may update the providers's status immediately or you may specify a date where the action will take effect.
+                    Terminated provider can <span class="uk-text-bold">no longer be reactivated</span> .
+                </p>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <select name="status" class="md-input" style="margin-top: 20px;">
+                            <option value="" disabled selected hidden>Action...</option>
+                            <option value="suspended">Suspend</option>
+                            <option value="accredited">Accredit</option>
+                            <option value="disaccredited">Disaccredit</option>
+                            <option value="terminated">Terminate</option>
+                            <option value="reactivated">Reactivate</option>
+                        </select>
+                    </div>
+                    <div class="uk-width-1-2">
+                        <span class="uk-input-group-addon" style="padding-top: 15px;">
+                            <input id="check_effective_immediately" type="checkbox" name="effective_immediately" value="1" data-md-icheck/>
+                            <label for="check_effective_immediately" class="inline-label">Effective Immediately</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="uk-grid uk-margin-large-small">
+                    <div class="uk-width-1-1">
+                        <div class="uk-form-row" id="row_effectivity_date">
+                            <label for="dp_effectivity_date">Effectivity Date</label>
+                            <input class="md-input" type="text" name="effectivity_date" value="" id="dp_effectivity_date" data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-margin-medium-top">
+                    <div class="uk-form-row">
+                        <label>Reason *</label>
+                        <textarea cols="30" name="reason" rows="2" class="md-input"></textarea>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-margin-medium-top">
+                    <div class="uk-form-row">
+                        <label>Remarks</label>
+                        <textarea cols="30" name="remarks" rows="2" class="md-input"></textarea>
+                    </div>
+                </div>
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
+                    <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -1370,6 +1427,20 @@
     <script src="/bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js"></script>
     <script>
         $(function() {
+
+            var check_effective_immediately = $('#check_effective_immediately');
+            var row_effectivity_date = $('#row_effectivity_date');
+            var effectivity_date = $('#dp_effectivity_date');
+
+            check_effective_immediately.on('ifChecked', function (event) {
+                effectivity_date.hide();
+                row_effectivity_date.hide();
+            });
+
+            check_effective_immediately.on('ifUnchecked', function (event) {
+                effectivity_date.show();
+                row_effectivity_date.show();
+            });
 
             var $dt_scroll = $('#dt_scroll');
             if($dt_scroll.length) {

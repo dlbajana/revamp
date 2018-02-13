@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\ProviderContactPerson;
+use App\ProviderAction;
 use App\ProviderLog;
 
 class Provider extends Model
@@ -26,6 +27,11 @@ class Provider extends Model
     public function providerLogs()
     {
         return $this->hasMany(ProviderLog::class, 'provider_id');
+    }
+
+    public function providerActions()
+    {
+        return $this->hasMany(ProviderAction::class, 'provider_id');
     }
 
     protected $dates = [

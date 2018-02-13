@@ -16,4 +16,5 @@ Route::resource('users', 'UserController', ['except' => ['destroy']]);
 | PROVIDER MANAGEMENT
 |--------------------------------------------------------------------------
 */
+Route::post('providers/{provider}/action', 'ProviderController@action')->name('providers.action');
 Route::resource('providers', 'ProviderController', ['except' => ['destroy']]);

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Provider;
 use Illuminate\Http\Request;
+use App\Provider;
+use App\ProviderAction;
 
 class ProviderController extends Controller
 {
@@ -63,5 +64,25 @@ class ProviderController extends Controller
         session()->flash('notify', ['message' => 'Provider Profile has been updated!', 'type' => 'success']);
 
         return redirect()->route('providers.index');
+    }
+
+    public function action(Request $request, Provider $provider)
+    {
+        $providerAction = $provider->providerActions()->create([
+            'status' => $request->status,
+            'effective_immediately' => $request->effective_immediately ?: 0,
+            'effectivity_date' => $request->effectivity_date,
+            'reason' => $request->reason,
+            'remarks' => $request->remarks,
+            'created_by' => auth()->user()->id,
+        ]);
+
+        if ($providerAction->effective_immediately) {
+            $provider->update([
+                'accreditation_status' => $providerAction->status,
+            ]);
+        }
+
+        return redirect()->route('providers.show', $provider->id);
     }
 }
