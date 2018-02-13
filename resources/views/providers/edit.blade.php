@@ -259,93 +259,45 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="uk-grid uk-margin-medium-top">
+                            <div class="uk-grid">
                                 <div class="uk-width-1-2">
-                                    <h3 class="heading_c"><u>Payment Terms</u> </h3>
-                                    <p>
+                                    <select name="payment_terms" data-md-selectize data-md-selectize-bottom data-uk-tooltip="{pos:'top'}" title="Payment Terms">
+                                        <option value="">Select...</option>
                                         @if ($errors->any())
-                                            <input type="radio" name="payment_terms" value="15" id="radio_payment_terms_15" data-md-icheck @if(old('payment_terms') == 15) checked @endif/>
+                                            <option value="15" @if (old('payment_terms') == 15) selected @endif>15 Days</option>
+                                            <option value="10" @if (old('payment_terms') == 10) selected @endif>10 Days</option>
+                                            <option value="7" @if (old('payment_terms') == 7) selected @endif>7 Days</option>
+                                            <option value="3" @if (old('payment_terms') == 3) selected @endif>3 Days</option>
+                                            <option value="1" @if (old('payment_terms') == 1) selected @endif>24 Hours</option>
                                         @else
-                                            <input type="radio" name="payment_terms" value="15" id="radio_payment_terms_15" data-md-icheck @if($provider->payment_terms == 15) checked @endif/>
-                                        @endif
-                                        <label for="radio_payment_terms_15" class="inline-label">15 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="payment_terms" value="10" id="radio_payment_terms_10" data-md-icheck @if(old('payment_terms') == 10) checked @endif/>
-                                        @else
-                                            <input type="radio" name="payment_terms" value="10" id="radio_payment_terms_10" data-md-icheck @if($provider->payment_terms == 10) checked @endif/>
-                                        @endif
-                                        <label for="radio_payment_terms_10" class="inline-label">10 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="payment_terms" value="7" id="radio_payment_terms_7" data-md-icheck @if(old('payment_terms') == 7) checked @endif/>
-                                        @else
-                                            <input type="radio" name="payment_terms" value="7" id="radio_payment_terms_7" data-md-icheck @if($provider->payment_terms == 7) checked @endif/>
+                                            <option value="15" @if ($provider->payment_terms == 15) selected @endif>15 Days</option>
+                                            <option value="10" @if ($provider->payment_terms == 10) selected @endif>10 Days</option>
+                                            <option value="7" @if ($provider->payment_terms == 7) selected @endif>7 Days</option>
+                                            <option value="3" @if ($provider->payment_terms == 3) selected @endif>3 Days</option>
+                                            <option value="1" @if ($provider->payment_terms == 1) selected @endif>24 Hours</option>
                                         @endif
 
-                                        <label for="radio_payment_terms_7" class="inline-label">7 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="payment_terms" value="3" id="radio_payment_terms_3" data-md-icheck @if(old('payment_terms') == 3) checked @endif/>
-                                        @else
-                                            <input type="radio" name="payment_terms" value="3" id="radio_payment_terms_3" data-md-icheck @if($provider->payment_terms == 3) checked @endif/>
-                                        @endif
-                                        <label for="radio_payment_terms_3" class="inline-label">3 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="payment_terms" value="1" id="radio_payment_terms_1" data-md-icheck @if(old('payment_terms') == 1) checked @endif/>
-                                        @else
-                                            <input type="radio" name="payment_terms" value="1" id="radio_payment_terms_1" data-md-icheck @if($provider->payment_terms == 1) checked @endif/>
-                                        @endif
-                                        <label for="radio_payment_terms_1" class="inline-label">24 Hours</label>
-                                    </p>
+                                    </select>
+                                    <span class="uk-form-help-block">Payment Terms</span>
                                 </div>
                                 <div class="uk-width-1-2">
-                                    <h3 class="heading_c"><u>Submission of Claims</u> </h3>
-                                    <p>
+                                    <select name="submission_of_claims" data-md-selectize data-md-selectize-bottom data-uk-tooltip="{pos:'top'}" title="Submission of Claims">
+                                        <option value="">Select...</option>
                                         @if ($errors->any())
-                                            <input type="radio" name="submission_of_claims" value="90" id="radio_submission_of_claims_90" data-md-icheck @if(old('submission_of_claims') == 90) checked @endif/>
+                                            <option value="90" @if (old('submission_of_claims') == 90) selected @endif>90 Days</option>
+                                            <option value="60" @if (old('submission_of_claims') == 60) selected @endif>60 Days</option>
+                                            <option value="30" @if (old('submission_of_claims') == 30) selected @endif>30 Days</option>
+                                            <option value="15" @if (old('submission_of_claims') == 15) selected @endif>15 Days</option>
+                                            <option value="7" @if (old('submission_of_claims') == 7) selected @endif>7 Days</option>
                                         @else
-                                            <input type="radio" name="submission_of_claims" value="90" id="radio_submission_of_claims_90" data-md-icheck @if($provider->submission_of_claims == 90) checked @endif/>
+                                            <option value="90" @if ($provider->submission_of_claims == 90) selected @endif>90 Days</option>
+                                            <option value="60" @if ($provider->submission_of_claims == 60) selected @endif>60 Days</option>
+                                            <option value="30" @if ($provider->submission_of_claims == 30) selected @endif>30 Days</option>
+                                            <option value="15" @if ($provider->submission_of_claims == 15) selected @endif>15 Days</option>
+                                            <option value="7" @if ($provider->submission_of_claims == 7) selected @endif>7 Days</option>
                                         @endif
-                                        <label for="radio_submission_of_claims_90" class="inline-label">90 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="submission_of_claims" value="60" id="radio_submission_of_claims_60" data-md-icheck @if(old('submission_of_claims') == 60) checked @endif/>
-                                        @else
-                                            <input type="radio" name="submission_of_claims" value="60" id="radio_submission_of_claims_60" data-md-icheck @if($provider->submission_of_claims == 60) checked @endif/>
-                                        @endif
-                                        <label for="radio_submission_of_claims_60" class="inline-label">60 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="submission_of_claims" value="30" id="radio_submission_of_claims_30" data-md-icheck @if(old('submission_of_claims') == 30) checked @endif/>
-                                        @else
-                                            <input type="radio" name="submission_of_claims" value="30" id="radio_submission_of_claims_30" data-md-icheck @if($provider->submission_of_claims == 30) checked @endif/>
-                                        @endif
-                                        <label for="radio_submission_of_claims_30" class="inline-label">30 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="submission_of_claims" value="15" id="radio_submission_of_claims_15" data-md-icheck @if(old('submission_of_claims') == 15) checked @endif/>
-                                        @else
-                                            <input type="radio" name="submission_of_claims" value="15" id="radio_submission_of_claims_15" data-md-icheck @if($provider->submission_of_claims == 15) checked @endif/>
-                                        @endif
-                                        <label for="radio_submission_of_claims_15" class="inline-label">15 Days</label>
-                                    </p>
-                                    <p>
-                                        @if ($errors->any())
-                                            <input type="radio" name="submission_of_claims" value="7" id="radio_submission_of_claims_7" data-md-icheck @if(old('submission_of_claims') == 7) checked @endif/>
-                                        @else
-                                            <input type="radio" name="submission_of_claims" value="7" id="radio_submission_of_claims_7" data-md-icheck @if($provider->submission_of_claims == 7) checked @endif/>
-                                        @endif
-                                        <label for="radio_submission_of_claims_7" class="inline-label">7 Days</label>
-                                    </p>
+                                    </select>
+                                    <span class="uk-form-help-block">Submission of Claims</span>
                                 </div>
                             </div>
                             <div class="uk-grid uk-margin-medium-top">
