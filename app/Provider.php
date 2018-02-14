@@ -14,26 +14,6 @@ class Provider extends Model
     protected $table = 'providers';
     protected $guarded = [];
 
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function providerContactPersons()
-    {
-        return $this->hasMany(ProviderContactPerson::class, 'provider_id');
-    }
-
-    public function providerLogs()
-    {
-        return $this->hasMany(ProviderLog::class, 'provider_id');
-    }
-
-    public function providerActions()
-    {
-        return $this->hasMany(ProviderAction::class, 'provider_id');
-    }
-
     protected $dates = [
         'created_at',
         'updated_at',
@@ -66,6 +46,50 @@ class Provider extends Model
         'free_wifi_emergency' => 'boolean',
         'free_wifi_mab' => 'boolean',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function providerContactPersons()
+    {
+        return $this->hasMany(ProviderContactPerson::class, 'provider_id');
+    }
+
+    public function providerLogs()
+    {
+        return $this->hasMany(ProviderLog::class, 'provider_id');
+    }
+
+    public function providerActions()
+    {
+        return $this->hasMany(ProviderAction::class, 'provider_id');
+    }
+
+    public function logChangAccreditationStatus($status, $createdById)
+    {
+        $this->providerLogs()->create([
+            'title' => 'Change Accreditation Status to ' . strtoupper($status),
+            'created_by' => $createdById,
+        ]);
+    }
+
+    public function logCreateProviderRecord()
+    {
+        $this->providerLogs()->create([
+            'title' => 'Create Provider Record',
+            'created_by' => auth()->user()->id,
+        ]);
+    }
+
+    public function logUpdateProviderRecord()
+    {
+        $this->providerLogs()->create([
+            'title' => 'Update Provider Record',
+            'created_by' => auth()->user()->id,
+        ]);
+    }
 
     public static function createFromRequest($request)
     {
@@ -183,6 +207,8 @@ class Provider extends Model
 
             'created_by' => auth()->user()->id,
         ]);
+
+        $provider->logCreateProviderRecord();
 
         foreach ($request->contact_person_department as $key => $contactPersonDepartment) {
             $provider->providerContactPersons()->create([
@@ -310,6 +336,8 @@ class Provider extends Model
             'remarks' => $request->remarks,
             'sign_off_document_url' => $request->hasFile('sign_off_document') ? Storage::disk('public')->putFile('sign_off_documents', $request->file('sign_off_document')) : $this->sign_off_document_url,
         ]);
+
+        $this->logUpdateProviderRecord();
 
         foreach ($request->contact_person_department as $key => $contactPersonDepartment) {
             $providerContactPersons = $this->providerContactPersons->where('department', $contactPersonDepartment)->first();
