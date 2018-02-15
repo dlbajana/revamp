@@ -67,7 +67,7 @@ class Provider extends Model
         return $this->hasMany(ProviderAction::class, 'provider_id');
     }
 
-    public function logChangAccreditationStatus($status, $createdById)
+    public function logChangeAccreditationStatus($status, $createdById)
     {
         $this->providerLogs()->create([
             'title' => 'Change Accreditation Status to ' . strtoupper($status),

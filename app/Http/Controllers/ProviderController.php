@@ -82,9 +82,11 @@ class ProviderController extends Controller
                 'accreditation_status' => $providerAction->status,
             ]);
 
-            $provider->logChangAccreditationStatus($providerAction->status, $providerAction->created_by);
+            $provider->logChangeAccreditationStatus($providerAction->status, $providerAction->created_by);
         }
 
-        return redirect()->route('providers.show', $provider->id);
+        session()->flash('notify', ['message' => 'Provider status has been updated!', 'type' => 'success']);
+
+        return redirect()->route('providers.index');
     }
 }
