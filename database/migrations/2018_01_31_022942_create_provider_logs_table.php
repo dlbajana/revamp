@@ -19,7 +19,7 @@ class CreateProviderLogsTable extends Migration
             $table->string('title');
             $table->text('reason')->nullable();
             $table->text('remarks')->nullable();
-            $table->integer('created_by');
+            $table->integer('created_by')->nullable();
             $table->timestamps();
         });
     }

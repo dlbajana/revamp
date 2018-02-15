@@ -12,6 +12,11 @@ class PhysiciansTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Physician::class, 120)->create();
+        factory(Physician::class, 120)->create()->each(function ($u) {
+            $u->physicianLogs()->create([
+                'title' => 'Create Physician Record',
+                'remarks' => '*** System Generated Record',
+            ]);
+        });
     }
 }

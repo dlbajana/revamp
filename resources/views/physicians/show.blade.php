@@ -715,9 +715,11 @@
                                     <span class="uk-margin-right">
                                         <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">{{ $log->created_at->toDateTimeString() }}</span>
                                     </span>
-                                    <span class="uk-margin-right">
-                                        <i class="material-icons">&#xE853;</i> <span class="uk-text-muted uk-text-small">{{ $log->createdBy->fullName() }}</span>
-                                    </span>
+                                    @if ($log->createdBy)
+                                        <span class="uk-margin-right">
+                                            <i class="material-icons">&#xE853;</i> <span class="uk-text-muted uk-text-small">{{ $log->createdBy->fullName() }}</span>
+                                        </span>
+                                    @endif
                                     </div>
                                 </div>
                             </li>
