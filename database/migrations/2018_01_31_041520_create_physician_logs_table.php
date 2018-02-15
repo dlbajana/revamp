@@ -16,7 +16,7 @@ class CreatePhysicianLogsTable extends Migration
         Schema::create('physician_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('physician_id');
-            $table->string('type');
+            $table->string('title');
             $table->text('reason')->nullable();
             $table->text('remarks')->nullable();
             $table->integer('created_by');
