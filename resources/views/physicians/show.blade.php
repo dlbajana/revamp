@@ -90,23 +90,27 @@
                         </div>
                     </div>
                     <div class="uk-grid">
-                        <div class="uk-width-1-3">
+                        <div class="uk-width-1-4">
                             <label>Nationality</label>
                             <input type="text" value="{{ strtoupper($physician->nationality) }}" readonly class="md-input label-fixed">
                         </div>
-                        <div class="uk-width-1-3">
+                        <div class="uk-width-1-4">
                             <label>Civil Status</label>
                             <input type="text" value="{{ strtoupper($physician->civil_status) }}" readonly class="md-input label-fixed">
                         </div>
-                        <div class="uk-width-1-3">
+                        <div class="uk-width-1-4">
                             <label>Birthday</label>
                             <input type="text" value="{{ optional($physician->birthday)->toFormattedDateString() }}" readonly class="md-input label-fixed">
+                        </div>
+                        <div class="uk-width-1-4">
+                            <label>Gender</label>
+                            <input type="text" value="{{ strtoupper($physician->gender) }}" readonly class="md-input label-fixed">
                         </div>
                     </div>
                     <div class="uk-grid">
                         <div class="uk-width-2-3">
-                            <label>Gender</label>
-                            <input type="text" value="{{ strtoupper($physician->gender) }}" readonly class="md-input label-fixed">
+                            <label>Accreditation Status</label>
+                            <input type="text" value="{{ strtoupper($physician->accreditation_status) }}" readonly class="md-input label-fixed">
                         </div>
                         <div class="uk-width-1-3">
                             <label>Suspected Fraud</label>
@@ -701,8 +705,83 @@
                         </tbody>
                     </table>
                 </li>
-                <li></li>
+                <li>
+                    <ul class="md-list">
+                        @foreach ($physician->physicianLogs->sortByDesc('created_at') as $key => $log)
+                            <li>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading"><a href="#">{{ $log->title }}</a></span>
+                                    <div class="uk-margin-small-top">
+                                    <span class="uk-margin-right">
+                                        <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">{{ $log->created_at->toDateTimeString() }}</span>
+                                    </span>
+                                    <span class="uk-margin-right">
+                                        <i class="material-icons">&#xE853;</i> <span class="uk-text-muted uk-text-small">{{ $log->createdBy->fullName() }}</span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </li>
+                            @endforeach
+                    </ul>
+                </li>
             </ul>
+        </div>
+    </div>
+
+    <div class="uk-modal" id="modal_update_status">
+        <div class="uk-modal-dialog">
+            <form action="{{ route('physicians.action', $physician->id) }}" method="post">
+                {{ csrf_field() }}
+                <div class="uk-modal-header">
+                    <h3 class="uk-modal-title">Update Status</h3>
+                </div>
+                <p>
+                    You may update the physician's status immediately or you may specify a date where the action will take effect.
+                    Terminated physician can <span class="uk-text-bold">no longer be reactivated</span> .
+                </p>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <select name="status" class="md-input" style="margin-top: 20px;">
+                            <option value="" disabled selected hidden>Action...</option>
+                            <option value="suspended">Suspend</option>
+                            <option value="accredited">Accredit</option>
+                            <option value="disaccredited">Disaccredit</option>
+                            <option value="terminated">Terminate</option>
+                            <option value="reactivated">Reactivate</option>
+                        </select>
+                    </div>
+                    <div class="uk-width-1-2">
+                        <span class="uk-input-group-addon" style="padding-top: 15px;">
+                            <input id="check_effective_immediately" type="checkbox" name="effective_immediately" value="1" data-md-icheck/>
+                            <label for="check_effective_immediately" class="inline-label">Effective Immediately</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="uk-grid uk-margin-large-small">
+                    <div class="uk-width-1-1">
+                        <div class="uk-form-row" id="row_effectivity_date">
+                            <label for="dp_effectivity_date">Effectivity Date</label>
+                            <input class="md-input" type="text" name="effectivity_date" value="" id="dp_effectivity_date" data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-margin-medium-top">
+                    <div class="uk-form-row">
+                        <label>Reason *</label>
+                        <textarea cols="30" name="reason" rows="2" class="md-input"></textarea>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-margin-medium-top">
+                    <div class="uk-form-row">
+                        <label>Remarks</label>
+                        <textarea cols="30" name="remarks" rows="2" class="md-input"></textarea>
+                    </div>
+                </div>
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
+                    <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
@@ -712,6 +791,20 @@
     <script src="/assets/js/custom/datatables/datatables.uikit.min.js"></script>
     <script>
         $(function() {
+            var check_effective_immediately = $('#check_effective_immediately');
+            var row_effectivity_date = $('#row_effectivity_date');
+            var effectivity_date = $('#dp_effectivity_date');
+
+            check_effective_immediately.on('ifChecked', function (event) {
+                effectivity_date.hide();
+                row_effectivity_date.hide();
+            });
+
+            check_effective_immediately.on('ifUnchecked', function (event) {
+                effectivity_date.show();
+                row_effectivity_date.show();
+            });
+
             var $dt_scroll = $('#dt_scroll');
             if($dt_scroll.length) {
                 $dt_scroll.DataTable({

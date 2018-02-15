@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\PhysicianLog;
+use App\PhysicianAction;
 
 class Physician extends Model
 {
@@ -44,9 +45,38 @@ class Physician extends Model
         return $this->hasMany(PhysicianLog::class, 'physician_id');
     }
 
+    public function physicianActions()
+    {
+        return $this->hasMany(PhysicianAction::class, 'physician_id');
+    }
+
     public function fullName()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function logChangeAccreditationStatus($status, $createdById)
+    {
+        $this->physicianLogs()->create([
+            'title' => 'Change Accreditation Status to ' . strtoupper($status),
+            'created_by' => $createdById,
+        ]);
+    }
+
+    public function logCreatePhysicianRecord()
+    {
+        $this->physicianLogs()->create([
+            'title' => 'Create Physician Record',
+            'created_by' => auth()->user()->id,
+        ]);
+    }
+
+    public function logUpdatePhysicianRecord()
+    {
+        $this->physicianLogs()->create([
+            'title' => 'Update Physician Record',
+            'created_by' => auth()->user()->id,
+        ]);
     }
 
     public static function createFromRequest($request)
@@ -122,5 +152,7 @@ class Physician extends Model
             'prc_validity_date' => $request->prc_validity_date,
             'remarks' => $request->remarks,
         ]);
+
+        $this->logUpdatePhysicianRecord();
     }
 }

@@ -71,8 +71,27 @@ class PhysicianController extends Controller
         return redirect()->route('physicians.index');
     }
 
-    public function destroy(Physician $physician)
+    public function action(Physician $physician, Request $request)
     {
-        //
+        $physicianAction = $physician->physicianActions()->create([
+            'status' => $request->status,
+            'effective_immediately' => $request->effective_immediately ?: 0,
+            'effectivity_date' => $request->effectivity_date,
+            'reason' => $request->reason,
+            'remarks' => $request->remarks,
+            'created_by' => auth()->user()->id,
+        ]);
+
+        if ($physicianAction->effective_immediately) {
+            $physician->update([
+                'accreditation_status' => $physicianAction->status,
+            ]);
+
+            $physician->logChangeAccreditationStatus($physicianAction->status, $physicianAction->created_by);
+        }
+
+        session()->flash('notify', ['message' => 'Physician status has been updated!', 'type' => 'success']);
+
+        return redirect()->route('physicians.index');
     }
 }
