@@ -13,8 +13,15 @@ Route::resource('users', 'UserController', ['except' => ['destroy']]);
 
 /*
 |--------------------------------------------------------------------------
-| PROVIDER MANAGEMENT
+| PROVIDERS
 |--------------------------------------------------------------------------
 */
 Route::post('providers/{provider}/action', 'ProviderController@action')->name('providers.action');
 Route::resource('providers', 'ProviderController', ['except' => ['destroy']]);
+
+/*
+|--------------------------------------------------------------------------
+| PHYSICIANS
+|--------------------------------------------------------------------------
+*/
+Route::resource('physicians', 'PhysicianController', ['except' => ['destroy']]);

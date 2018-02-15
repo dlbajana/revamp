@@ -254,7 +254,7 @@
                     </a>
                 </li>
                 <li class="@yield('nav_physicians')" title="Physicians">
-                    <a href="#">
+                    <a href="{{ route('physicians.index') }}">
                         <span class="menu_icon"><i class="material-icons">&#xE85E;</i></span>
                         <span class="menu_title">Physicians</span>
                     </a>
