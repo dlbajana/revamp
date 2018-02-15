@@ -34,6 +34,6 @@ class CreateProviderContactPersonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provider_contact_details');
+        Schema::dropIfExists('provider_contact_persons');
     }
 }
