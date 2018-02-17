@@ -25,7 +25,7 @@ class CreatePhysiciansTable extends Migration
             $table->string('civil_status')->nullable();
             $table->string('gender');
             $table->integer('specialization_id')->nullable();
-            $table->integer('sub_specialization_id')->nullable();
+            $table->integer('subspecialization_id')->nullable();
             $table->string('accreditation_status');
             $table->string('status');
             $table->tinyInteger('suspected_fraud')->default(0);

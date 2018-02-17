@@ -120,11 +120,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-2">
                             <label>Specialization</label>
-                            <input type="text" value="{{ $physician->specialization->specialization_name }}" readonly class="md-input label-fixed">
+                            <input type="text" value="{{ optional($physician->specialization)->specialization_name }}" readonly class="md-input label-fixed">
                         </div>
                         <div class="uk-width-1-2">
                             <label>Sub Specialization</label>
-                            <input type="text" value="{{ $physician->subSpecialization->subspecialization_name }}" readonly class="md-input label-fixed">
+                            <input type="text" value="{{ optional($physician->subSpecialization)->subspecialization_name }}" readonly class="md-input label-fixed">
                         </div>
                     </div>
                     <h3 class="heading_c uk-margin-medium-top uk-text-success uk-text-italic">Contact Details</h3>

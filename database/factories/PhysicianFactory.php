@@ -4,8 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Physician::class, function (Faker $faker) {
     $nationalities = App\Nationality::all();
-    $specialization = App\Specialization::all()->unique('specialization_id')->values();
-    $sub_specialization = App\Specialization::all();
+    $specialization = $faker->randomElement(App\Specialization::all()->toArray());
 
 
     return [
@@ -17,8 +16,8 @@ $factory->define(App\Physician::class, function (Faker $faker) {
         'birthday' => $faker->dateTimeThisDecade(),
         'civil_status' => $faker->randomElement(['single', 'married', 'divorced']),
         'gender' => $faker->randomElement(['male', 'female']),
-        'specialization_id' => $faker->randomElement($specialization->toArray())['id'],
-        'sub_specialization_id' => $faker->randomElement($sub_specialization->toArray())['id'],
+        'specialization_id' => $specialization['specialization_id'],
+        'subspecialization_id' => $specialization['subspecialization_id'],
         'accreditation_status' => $faker->randomElement(['accredited', 'non-accredited', 'disaccredited']),
         'status' => $faker->randomElement(['active', 'inactive']),
         'suspected_fraud' => $faker->randomElement([0, 1]),

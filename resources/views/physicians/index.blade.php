@@ -58,7 +58,7 @@
                         <tr>
                             <td><a href="{{ route('physicians.show', $physician->id) }}">{{ sprintf('%06d', $physician->id) }}</a></td>
                             <td><a href="{{ route('physicians.show', $physician->id) }}">{{ $physician->fullName() }}</a></td>
-                            <td>{{ $physician->specialization->specialization_name }}</td>
+                            <td>{{ optional($physician->specialization)->specialization_name }}</td>
                             <td>
                                 <span class="uk-badge @if($physician->accreditation_status == 'disaccredited') uk-badge-danger @elseif($physician->accreditation_status == 'non-accredited') uk-badge-warning @endif">
                                     {{ strtoupper($physician->accreditation_status) }}

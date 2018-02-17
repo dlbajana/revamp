@@ -138,20 +138,16 @@
                             </div>
                             <div class="uk-grid">
                                 <div class="uk-width-1-2">
-                                    <select name="specialization" data-md-selectize data-md-selectize-bottom data-uk-tooltip="{post: 'top'}" title="Specialization">
-                                        <option value="">Select...</option>
-                                        @foreach ($specializations->unique('specialization_id')->values() as $key => $specialization)
-                                            <option value="{{ $specialization->id }}" @if(old('specialization') == $specialization->id) selected @endif>{{ $specialization->specialization_name }}</option>
+                                    <select id="select-specialization" name="specialization" data-uk-tooltip="{post: 'top'}" title="Specialization">
+                                        <option value="0">&nbsp;</option>
+                                        @foreach ($specializations as $key => $specialization)
+                                            <option value="{{ $specialization->specialization_id }}">{{ $specialization->specialization_name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="uk-form-help-block">Specialization</span>
                                 </div>
                                 <div class="uk-width-1-2">
-                                    <select name="sub_specialization" data-md-selectize data-md-selectize-bottom data-uk-tooltip="{post: 'top'}" title="Sub Specialization">
-                                        <option value="">Select...</option>
-                                        @foreach ($specializations as $key => $specialization)
-                                            <option value="{{ $specialization->id }}" @if(old('sub_specialization') == $specialization->id) selected @endif>{{ $specialization->subspecialization_name }}</option>
-                                        @endforeach
+                                    <select id="select-subspecialization" name="subspecialization" data-uk-tooltip="{post: 'top'}" title="Sub Specialization">
                                     </select>
                                     <span class="uk-form-help-block">Sub Specialization</span>
                                 </div>
@@ -351,33 +347,88 @@
 @section('scripts')
     <script>
         $(function () {
-            $dp_birthday = $('#dp_birthday');
-            UIkit.datepicker($dp_birthday, { format:'YYYY-MM-DD' });
-
-            $dp_prc_validity_date = $('#dp_prc_validity_date');
-            UIkit.datepicker($dp_prc_validity_date, { format:'YYYY-MM-DD' });
-
-            var $dp_phic_accreditation_from = $('#dp_phic_accreditation_from'),
-                $dp_phic_accreditation_to = $('#dp_phic_accreditation_to');
-
-            var start_date = UIkit.datepicker($dp_phic_accreditation_from, {
-                format:'YYYY-MM-DD'
-            });
-
-            var end_date = UIkit.datepicker($dp_phic_accreditation_to, {
-                format:'YYYY-MM-DD'
-            });
-
-            $dp_phic_accreditation_from.on('change',function() {
-                end_date.options.minDate = $dp_phic_accreditation_from.val();
-                setTimeout(function() {
-                    $dp_phic_accreditation_to.focus();
-                },300);
-            });
-
-            $dp_phic_accreditation_to.on('change',function() {
-                start_date.options.maxDate = $dp_phic_accreditation_to.val();
-            });
+            amaphil.init();
         });
+
+        amaphil = {
+            init: function() {
+                amaphil.select_specialization();
+                amaphil.date_picker_birthday();
+                amaphil.date_picker_prc_validity();
+                amaphil.date_range_phic_accreditation();
+            },
+            select_specialization: function() {
+                var xhr;
+                var select_specialization, $select_specialization;
+                var select_subspecialization, $select_subspecialization;
+
+                $select_specialization = $('#select-specialization').selectize({
+                    valueField: 'specialization_id',
+                    labelField: 'specialization_name',
+                    searchField: ['specialization_name'],
+
+                    onChange: function (value) {
+                        if (!value.length) return;
+                        select_subspecialization.disable();
+                        select_subspecialization.clearOptions();
+                        select_subspecialization.load(function(callback) {
+                            if (value == 0) return;
+                            xhr && xhr.abort();
+                            xhr = $.ajax({
+                                url: 'http://revamp.test/api/specializations/' + value + '/subspecializations',
+                                success: function(results) {
+                                    select_subspecialization.enable();
+                                    callback(results);
+                                },
+                                error: function() {
+                                    callback();
+                                }
+                            })
+                        });
+                    }
+                });
+
+                $select_subspecialization = $('#select-subspecialization').selectize({
+                    valueField: 'id',
+                    labelField: 'subspecialization_name',
+                    searchField: ['subspecialization_name'],
+                });
+
+                select_subspecialization = $select_subspecialization[0].selectize;
+
+                select_subspecialization.disable();
+            },
+            date_picker_birthday: function() {
+                $dp_birthday = $('#dp_birthday');
+                UIkit.datepicker($dp_birthday, { format:'YYYY-MM-DD' });
+            },
+            date_picker_prc_validity: function() {
+                $dp_prc_validity_date = $('#dp_prc_validity_date');
+                UIkit.datepicker($dp_prc_validity_date, { format:'YYYY-MM-DD' });
+            },
+            date_range_phic_accreditation: function() {
+                var $dp_phic_accreditation_from = $('#dp_phic_accreditation_from'),
+                    $dp_phic_accreditation_to = $('#dp_phic_accreditation_to');
+
+                var start_date = UIkit.datepicker($dp_phic_accreditation_from, {
+                    format:'YYYY-MM-DD'
+                });
+
+                var end_date = UIkit.datepicker($dp_phic_accreditation_to, {
+                    format:'YYYY-MM-DD'
+                });
+
+                $dp_phic_accreditation_from.on('change',function() {
+                    end_date.options.minDate = $dp_phic_accreditation_from.val();
+                    setTimeout(function() {
+                        $dp_phic_accreditation_to.focus();
+                    },300);
+                });
+
+                $dp_phic_accreditation_to.on('change',function() {
+                    start_date.options.maxDate = $dp_phic_accreditation_to.val();
+                });
+            }
+        }
     </script>
 @endsection

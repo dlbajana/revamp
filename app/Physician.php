@@ -32,12 +32,12 @@ class Physician extends Model
 
     public function specialization()
     {
-        return $this->belongsTo(Specialization::class, 'specialization_id');
+        return $this->belongsTo(Specialization::class, 'specialization_id', 'specialization_id');
     }
 
     public function subSpecialization()
     {
-        return $this->belongsTo(Specialization::class, 'sub_specialization_id');
+        return $this->belongsTo(Specialization::class, 'subspecialization_id', 'subspecialization_id');
     }
 
     public function physicianLogs()
@@ -93,7 +93,7 @@ class Physician extends Model
             'civil_status' => $request->civil_status,
             'gender' => $request->gender,
             'specialization_id' => $request->specialization,
-            'sub_specialization_id' => $request->sub_specialization,
+            'subspecialization_id' => $request->subspecialization,
             'accreditation_status' => $request->accreditation_status,
             'status' => 'active',
             'suspected_fraud' => $request->suspected_fraud ?: 0,
@@ -131,7 +131,7 @@ class Physician extends Model
             'civil_status' => $request->civil_status,
             'gender' => $request->gender,
             'specialization_id' => $request->specialization,
-            'sub_specialization_id' => $request->sub_specialization,
+            'subspecialization_id' => $request->subspecialization,
             'status' => 'active',
             'suspected_fraud' => $request->suspected_fraud ?: 0,
             'telephone_no' => $request->telephone_no,
