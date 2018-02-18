@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Provider;
 use App\ProviderAction;
+use App\Address;
 
 class ProviderController extends Controller
 {
@@ -15,13 +16,14 @@ class ProviderController extends Controller
 
     public function index()
     {
-        $providers = Provider::all();
+        $providers = Provider::with(['addressProvince'])->get();
         return view('providers.index', compact('providers'));
     }
 
     public function create()
     {
-        return view('providers.create');
+        $addresses = Address::all();
+        return view('providers.create', compact('addresses'));
     }
 
     public function store(Request $request)
@@ -47,7 +49,8 @@ class ProviderController extends Controller
 
     public function edit(Provider $provider)
     {
-        return view('providers.edit', compact('provider'));
+        $addresses = Address::all();
+        return view('providers.edit', compact('provider', 'addresses'));
     }
 
     public function update(Request $request, Provider $provider)

@@ -37,6 +37,10 @@ class CreateProvidersTable extends Migration
             $table->date('phic_accreditation_to')->nullable();
 
             $table->text('address')->nullable();
+            $table->string('address_region_id')->nullable();
+            $table->integer('address_province_id')->nullable();
+            $table->integer('address_city_id')->nullable();
+            $table->integer('address_baranggay_id')->nullable();
 
             $table->string('payment_setup')->nullable();
             $table->integer('payment_terms')->comment('Number of Days');

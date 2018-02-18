@@ -8,6 +8,7 @@ use App\User;
 use App\ProviderContactPerson;
 use App\ProviderAction;
 use App\ProviderLog;
+use App\Address;
 
 class Provider extends Model
 {
@@ -50,6 +51,26 @@ class Provider extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function addressRegion()
+    {
+        return $this->belongsTo(Address::class, 'address_region_id', 'region_id');
+    }
+
+    public function addressProvince()
+    {
+        return $this->belongsTo(Address::class, 'address_province_id', 'province_id');
+    }
+
+    public function addressCity()
+    {
+        return $this->belongsTo(Address::class, 'address_city_id', 'city_id');
+    }
+
+    public function addressBaranggay()
+    {
+        return $this->belongsTo(Address::class, 'address_baranggay_id', 'baranggay_id');
     }
 
     public function providerContactPersons()
@@ -118,6 +139,10 @@ class Provider extends Model
             'phic_accreditation_to' => $request->phic_accreditation_to,
 
             'address' => $request->address,
+            'address_region_id' => $request->address_region,
+            'address_province_id' => $request->address_province,
+            'address_city_id' => $request->address_city,
+            'address_baranggay_id' => $request->address_baranggay,
 
             'payment_setup' => $request->payment_setup,
             'payment_terms' => $request->payment_terms,
@@ -249,6 +274,10 @@ class Provider extends Model
             'phic_accreditation_to' => $request->phic_accreditation_to,
 
             'address' => $request->address,
+            'address_region_id' => $request->address_region,
+            'address_province_id' => $request->address_province,
+            'address_city_id' => $request->address_city,
+            'address_baranggay_id' => $request->address_baranggay,
 
             'payment_setup' => $request->payment_setup,
             'payment_terms' => $request->payment_terms,
