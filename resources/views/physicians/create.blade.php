@@ -140,14 +140,30 @@
                                 <div class="uk-width-1-2">
                                     <select id="select-specialization" name="specialization" data-uk-tooltip="{post: 'top'}" title="Specialization">
                                         <option value="0">&nbsp;</option>
-                                        @foreach ($specializations as $key => $specialization)
-                                            <option value="{{ $specialization->specialization_id }}">{{ $specialization->specialization_name }}</option>
+                                        @foreach ($specializations->unique('specialization_id')->values() as $key => $specialization)
+                                            @if ($errors->any())
+                                                <option value="{{ $specialization->specialization_id }}" @if(old('specialization') == $specialization->specialization_id) selected @endif>
+                                                    {{ $specialization->specialization_name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $specialization->specialization_id }}">
+                                                    {{ $specialization->specialization_name }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <span class="uk-form-help-block">Specialization</span>
                                 </div>
                                 <div class="uk-width-1-2">
-                                    <select id="select-subspecialization" name="subspecialization" data-uk-tooltip="{post: 'top'}" title="Sub Specialization">
+                                    <select id="select-subspecialization" name="subspecialization" data-uk-tooltip="{post: 'top'}" title="Sub Specialization" @if(! $errors->any()) disabled @endif>
+                                        @if ($errors->any())
+                                            <option value="">&nbsp;</option>
+                                            @foreach ($specializations->where('specialization_id', old('specialization'))->unique('subspecialization_id')->values() as $key => $subspecialization)
+                                                <option value="{{ $subspecialization->subspecialization_id }}" @if(old('subspecialization') == $subspecialization->subspecialization_id) selected @endif>
+                                                    {{ $subspecialization->subspecialization_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     <span class="uk-form-help-block">Sub Specialization</span>
                                 </div>
@@ -368,11 +384,10 @@
                     searchField: ['specialization_name'],
 
                     onChange: function (value) {
-                        if (!value.length) return;
                         select_subspecialization.disable();
                         select_subspecialization.clearOptions();
+                        if (!value.length) return;
                         select_subspecialization.load(function(callback) {
-                            if (value == 0) return;
                             xhr && xhr.abort();
                             xhr = $.ajax({
                                 url: 'http://revamp.test/api/specializations/' + value + '/subspecializations',
@@ -395,8 +410,6 @@
                 });
 
                 select_subspecialization = $select_subspecialization[0].selectize;
-
-                select_subspecialization.disable();
             },
             date_picker_birthday: function() {
                 $dp_birthday = $('#dp_birthday');

@@ -152,7 +152,7 @@
                             <div class="uk-grid">
                                 <div class="uk-width-1-2">
                                     <select id="select-specialization" name="specialization" data-uk-tooltip="{post: 'top'}" title="Specialization">
-                                        <option value="">Select...</option>
+                                        <option value="0">&nbsp;</option>
                                         @foreach ($specializations->unique('specialization_id')->values() as $key => $specialization)
                                             @if ($errors->any())
                                                 <option value="{{ $specialization->specialization_id }}" @if(old('specialization') == $specialization->specialization_id) selected @endif>
@@ -170,13 +170,13 @@
                                 <div class="uk-width-1-2">
                                     <select id="select-subspecialization" name="subspecialization" data-uk-tooltip="{post: 'top'}" title="Sub Specialization">
                                         @if ($errors->any())
-                                            @foreach ($specialization->where('specialization_id', old('specialization'))->get() as $key => $subspecialization)
-                                                <option value="{{ $subspecialization->specialization_id }}" @if(old('subspecialization') == $subspecialization->subspecialization_id) selected @endif>
+                                            @foreach ($specializations->where('specialization_id', old('specialization'))->unique('subspecialization_id')->values() as $key => $subspecialization)
+                                                <option value="{{ $subspecialization->subspecialization_id }}" @if(old('subspecialization') == $subspecialization->subspecialization_id) selected @endif>
                                                     {{ $subspecialization->subspecialization_name }}
                                                 </option>
                                             @endforeach
                                         @else
-                                            @foreach ($specialization->where('specialization_id', $physician->specialization_id)->get() as $key => $subspecialization)
+                                            @foreach ($specializations->where('specialization_id', $physician->specialization_id)->unique('subspecialization_id')->values() as $key => $subspecialization)
                                                 <option value="{{ $subspecialization->subspecialization_id }}" @if($physician->subspecialization_id == $subspecialization->subspecialization_id) selected @endif>
                                                     {{ $subspecialization->subspecialization_name }}
                                                 </option>
