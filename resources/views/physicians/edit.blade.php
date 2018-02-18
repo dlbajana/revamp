@@ -170,12 +170,14 @@
                                 <div class="uk-width-1-2">
                                     <select id="select-subspecialization" name="subspecialization" data-uk-tooltip="{post: 'top'}" title="Sub Specialization">
                                         @if ($errors->any())
+                                            <option value="0">&nbsp;</option>
                                             @foreach ($specializations->where('specialization_id', old('specialization'))->unique('subspecialization_id')->values() as $key => $subspecialization)
                                                 <option value="{{ $subspecialization->subspecialization_id }}" @if(old('subspecialization') == $subspecialization->subspecialization_id) selected @endif>
                                                     {{ $subspecialization->subspecialization_name }}
                                                 </option>
                                             @endforeach
                                         @else
+                                            <option value="0">&nbsp;</option>
                                             @foreach ($specializations->where('specialization_id', $physician->specialization_id)->unique('subspecialization_id')->values() as $key => $subspecialization)
                                                 <option value="{{ $subspecialization->subspecialization_id }}" @if($physician->subspecialization_id == $subspecialization->subspecialization_id) selected @endif>
                                                     {{ $subspecialization->subspecialization_name }}
