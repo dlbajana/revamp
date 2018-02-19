@@ -1297,7 +1297,7 @@
                             if (value == 0) return;
                             xhr && xhr.abort();
                             xhr = $.ajax({
-                                url: 'http://revamp.test/api/address/regions/' + value + '/provinces',
+                                url: '/api/address/regions/' + value + '/provinces',
                                 success: function(results) {
                                     select_address_province.enable();
                                     callback(results);
@@ -1326,7 +1326,7 @@
                             if (value == 0) return;
                             xhr && xhr.abort();
                             xhr = $.ajax({
-                                url: 'http://revamp.test/api/address/regions/provinces/' + value + '/cities',
+                                url: '/api/address/regions/provinces/' + value + '/cities',
                                 success: function(results) {
                                     select_address_city.enable();
                                     callback(results);
@@ -1353,7 +1353,7 @@
                             if (value == 0) return;
                             xhr && xhr.abort();
                             xhr = $.ajax({
-                                url: 'http://revamp.test/api/address/regions/provinces/cities/' + value + '/baranggays',
+                                url: '/api/address/regions/provinces/cities/' + value + '/baranggays',
                                 success: function(results) {
                                     select_address_baranggay.enable();
                                     callback(results);
