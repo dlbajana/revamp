@@ -223,8 +223,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="heading_c uk-margin-large-top uk-text-success uk-text-italic">Address</h3>
-
+                            <h3 class="heading_c uk-margin-large-top uk-text-success uk-text-italic">Business Address</h3>
                             <div class="uk-grid">
                                 <div class="uk-width-1-1">
                                     <select id="select-address-region" name="address_region" data-uk-tooltip="{pos:'top'}" title="Region">
