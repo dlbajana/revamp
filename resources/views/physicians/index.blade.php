@@ -98,9 +98,7 @@
             altair_md.inputs();
 
             // DataTable
-            var individual_search_table = $dt_individual_search.DataTable({
-                "order": [[ 0, "desc" ]]
-            });
+            var individual_search_table = $dt_individual_search.DataTable();
 
             // Apply the search
             individual_search_table.columns().every(function() {

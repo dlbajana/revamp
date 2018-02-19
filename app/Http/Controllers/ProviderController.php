@@ -16,7 +16,7 @@ class ProviderController extends Controller
 
     public function index()
     {
-        $providers = Provider::with(['addressProvince'])->get();
+        $providers = Provider::with(['addressProvince'])->orderBy('id', 'desc')->get();
         return view('providers.index', compact('providers'));
     }
 

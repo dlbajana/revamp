@@ -17,7 +17,7 @@ class PhysicianController extends Controller
 
     public function index()
     {
-        $physicians = Physician::all();
+        $physicians = Physician::orderBy('id', 'desc')->get();
         return view('physicians.index', compact('physicians'));
     }
 
