@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\PhysicianLog;
 use App\PhysicianAction;
+use App\Address;
 
 class Physician extends Model
 {
@@ -28,6 +29,46 @@ class Physician extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function homeAddressRegion()
+    {
+        return $this->belongsTo(Address::class, 'home_address_region_id', 'region_id');
+    }
+
+    public function homeAddressProvince()
+    {
+        return $this->belongsTo(Address::class, 'home_address_province_id', 'province_id');
+    }
+
+    public function homeAddressCity()
+    {
+        return $this->belongsTo(Address::class, 'home_address_city_id', 'city_id');
+    }
+
+    public function homeAddressBaranggay()
+    {
+        return $this->belongsTo(Address::class, 'home_address_baranggay_id', 'baranggay_id');
+    }
+
+    public function provincialAddressRegion()
+    {
+        return $this->belongsTo(Address::class, 'provincial_address_region_id', 'region_id');
+    }
+
+    public function provincialAddressProvince()
+    {
+        return $this->belongsTo(Address::class, 'provincial_address_province_id', 'province_id');
+    }
+
+    public function provincialAddressCity()
+    {
+        return $this->belongsTo(Address::class, 'provincial_address_city_id', 'city_id');
+    }
+
+    public function provincialAddressBaranggay()
+    {
+        return $this->belongsTo(Address::class, 'provincial_address_baranggay_id', 'baranggay_id');
     }
 
     public function specialization()
@@ -100,8 +141,19 @@ class Physician extends Model
             'telephone_no' => $request->telephone_no,
             'mobile_no' => $request->mobile_no,
             'email' => $request->email,
+
             'home_address' => $request->home_address,
+            'home_address_region_id' => $request->home_address_region,
+            'home_address_province_id' => $request->home_address_province,
+            'home_address_city_id' => $request->home_address_city,
+            'home_address_baranggay_id' => $request->home_address_baranggay,
+
             'provincial_address' => $request->provincial_address,
+            'provincial_address_region_id' => $request->provincial_address_region,
+            'provincial_address_province_id' => $request->provincial_address_province,
+            'provincial_address_city_id' => $request->provincial_address_city,
+            'provincial_address_baranggay_id' => $request->provincial_address_baranggay,
+
             'bank_name' => $request->bank_name,
             'bank_branch' => $request->bank_branch,
             'bank_account_name' => $request->bank_account_name,
@@ -137,8 +189,19 @@ class Physician extends Model
             'telephone_no' => $request->telephone_no,
             'mobile_no' => $request->mobile_no,
             'email' => $request->email,
+
             'home_address' => $request->home_address,
+            'home_address_region_id' => $request->home_address_region,
+            'home_address_province_id' => $request->home_address_province,
+            'home_address_city_id' => $request->home_address_city,
+            'home_address_baranggay_id' => $request->home_address_baranggay,
+
             'provincial_address' => $request->provincial_address,
+            'provincial_address_region_id' => $request->provincial_address_region,
+            'provincial_address_province_id' => $request->provincial_address_province,
+            'provincial_address_city_id' => $request->provincial_address_city,
+            'provincial_address_baranggay_id' => $request->provincial_address_baranggay,
+
             'bank_name' => $request->bank_name,
             'bank_branch' => $request->bank_branch,
             'bank_account_name' => $request->bank_account_name,
@@ -154,5 +217,59 @@ class Physician extends Model
         ]);
 
         $this->logUpdatePhysicianRecord();
+    }
+
+    public function completeHomeAddress()
+    {
+        $address = $this->home_address;
+
+        if ($baranggay = $this->homeAddressBaranggay) {
+            $address = $address . ', ' . $baranggay->baranggay;
+        }
+
+        if ($city = $this->homeAddressCity) {
+            $address = $address . ', ' . $city->city;
+
+            if ($baranggay = $this->homeAddressBaranggay) {
+                $address = $address . ' ' . $baranggay->zipcode;
+            }
+        }
+
+        if ($province = $this->homeAddressProvince) {
+            $address = $address . ', ' . $province->province;
+        }
+
+        if ($region = $this->homeAddressRegion) {
+            $address = $address . ', ' . $region->region;
+        }
+
+        return $address;
+    }
+
+    public function completeProvincialAddress()
+    {
+        $address = $this->home_address;
+
+        if ($baranggay = $this->provincialAddressBaranggay) {
+            $address = $address . ', ' . $baranggay->baranggay;
+        }
+
+        if ($city = $this->provincialAddressCity) {
+            $address = $address . ', ' . $city->city;
+
+            if ($baranggay = $this->provincialAddressBaranggay) {
+                $address = $address . ' ' . $baranggay->zipcode;
+            }
+        }
+
+        if ($province = $this->provincialAddressProvince) {
+            $address = $address . ', ' . $province->province;
+        }
+
+        if ($region = $this->provincialAddressRegion) {
+            $address = $address . ', ' . $region->region;
+        }
+
+        return $address;
     }
 }

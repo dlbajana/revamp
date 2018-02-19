@@ -35,7 +35,16 @@ class CreatePhysiciansTable extends Migration
             $table->string('email')->nullable();
 
             $table->text('home_address')->nullable();
+            $table->string('home_address_region_id')->nullable();
+            $table->integer('home_address_province_id')->nullable();
+            $table->integer('home_address_city_id')->nullable();
+            $table->integer('home_address_baranggay_id')->nullable();
+
             $table->text('provincial_address')->nullable();
+            $table->string('provincial_address_region_id')->nullable();
+            $table->integer('provincial_address_province_id')->nullable();
+            $table->integer('provincial_address_city_id')->nullable();
+            $table->integer('provincial_address_baranggay_id')->nullable();
 
             $table->string('bank_name')->nullable();
             $table->string('bank_branch')->nullable();

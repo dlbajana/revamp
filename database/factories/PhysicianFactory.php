@@ -5,7 +5,9 @@ use Faker\Generator as Faker;
 $factory->define(App\Physician::class, function (Faker $faker) {
     $nationalities = App\Nationality::all();
     $specialization = $faker->randomElement(App\Specialization::all()->toArray());
-
+    $address = App\Address::where('region_id', 'NCR')->orWhere('region_id', '4A')->get()->toArray();
+    $homeAddress = $faker->randomElement($address);
+    $provincialAddress = $faker->randomElement($address);
 
     return [
         'first_name' => $faker->firstName,
@@ -24,8 +26,16 @@ $factory->define(App\Physician::class, function (Faker $faker) {
         'telephone_no' => $faker->numerify('#######'),
         'mobile_no' => $faker->numerify('09#########'),
         'email' => $faker->email,
-        'home_address' => $faker->address,
-        'provincial_address' => $faker->address,
+        'home_address' => $faker->streetAddress,
+        'home_address_region_id' => $homeAddress['region_id'],
+        'home_address_province_id' => $homeAddress['province_id'],
+        'home_address_city_id' => $homeAddress['city_id'],
+        'home_address_baranggay_id' => $homeAddress['baranggay_id'],
+        'provincial_address' => $faker->streetAddress,
+        'provincial_address_region_id' => $provincialAddress['region_id'],
+        'provincial_address_province_id' => $provincialAddress['province_id'],
+        'provincial_address_city_id' => $provincialAddress['city_id'],
+        'provincial_address_baranggay_id' => $provincialAddress['baranggay_id'],
         'tin' => $faker->numerify('##########'),
         'sss_no' => $faker->numerify('##########'),
         'philhealth_no' => $faker->numerify('###########'),

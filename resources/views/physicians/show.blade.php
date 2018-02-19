@@ -38,7 +38,7 @@
             <div class="user_heading_content">
                 <h2 class="heading_b uk-margin-bottom">
                     <span class="uk-text-truncate">[{{ sprintf('%06d', $physician->id) }}] {{ $physician->fullName() }}</span>
-                    <span class="sub-heading">{{ $physician->home_address }}</span>
+                    <span class="sub-heading">{{ $physician->completeHomeAddress() }}</span>
                 </h2>
                 <ul class="user_stats">
                     <li>
@@ -178,11 +178,11 @@
                     <div class="uk-grid">
                         <div class="uk-width-1-1">
                             <label>Home Address</label>
-                            <textarea cols="30" rows="2" class="md-input label-fixed" readonly>{{ $physician->home_address }}</textarea>
+                            <textarea cols="30" rows="2" class="md-input label-fixed" readonly>{{ $physician->completeHomeAddress() }}</textarea>
                         </div>
                         <div class="uk-width-1-1 uk-margin-medium-top">
                             <label>Provincial Address</label>
-                            <textarea cols="30" rows="2" class="md-input label-fixed" readonly>{{ $physician->provincial_address }}</textarea>
+                            <textarea cols="30" rows="2" class="md-input label-fixed" readonly>{{ $physician->completeProvincialAddress() }}</textarea>
                         </div>
                     </div>
                     <h3 class="full_width_in_card heading_c uk-margin-medium-top">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Physician;
 use App\Specialization;
 use App\Nationality;
+use App\Address;
 use Illuminate\Http\Request;
 
 class PhysicianController extends Controller
@@ -24,8 +25,9 @@ class PhysicianController extends Controller
     {
         $specializations = Specialization::all();
         $nationalities = Nationality::all();
+        $addresses = Address::all();
 
-        return view('physicians.create', compact('specializations', 'nationalities'));
+        return view('physicians.create', compact('specializations', 'nationalities', 'addresses'));
     }
 
     public function store(Request $request)
@@ -52,8 +54,9 @@ class PhysicianController extends Controller
     {
         $specializations = Specialization::all();
         $nationalities = Nationality::all();
+        $addresses = Address::all();
 
-        return view('physicians.edit', compact('physician', 'specializations', 'nationalities'));
+        return view('physicians.edit', compact('physician', 'specializations', 'nationalities', 'addresses'));
     }
 
     public function update(Request $request, Physician $physician)

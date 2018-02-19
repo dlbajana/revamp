@@ -273,20 +273,155 @@
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="heading_c uk-margin-large-top uk-text-success uk-text-italic">Address</h3>
                             <div class="uk-grid">
-                                <div class="uk-width-medium-1-1">
-                                    <div class="uk-form-row">
-                                        <label>Home Address</label>
-                                        <textarea cols="30" rows="4" name="home_address" class="md-input">{{ old('home_address') }}</textarea>
+                                <div class="uk-width-medium-1-2">
+                                    <h3 class="heading_c uk-margin-large-top uk-text-success uk-text-italic">Home Address</h3>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-home-address-region" name="home_address_region" data-uk-tooltip="{pos:'top'}" title="Region">
+                                                <option value="0">&nbsp;</option>
+                                                @foreach ($addresses->unique('region_id')->values() as $key => $address)
+                                                    @if ($errors->any())
+                                                        <option value="{{ $address->region_id }}" @if(old('home_address_region') == $address->region_id) selected @endif>
+                                                            {{ $address->region }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $address->region_id }}">
+                                                            {{ $address->region }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <span class="uk-form-help-block">Region</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-home-address-province" name="home_address_province" data-uk-tooltip="{pos:'top'}" title="Province" @if(! $errors->any()) disabled @endif>
+                                                @if ($errors->any())
+                                                    <option value="0">&nbsp;</option>
+                                                    @foreach ($addresses->where('region_id', old('home_address_region'))->unique('province_id')->values() as $key => $address)
+                                                        <option value="{{ $address->province_id }}" @if(old('home_address_province') == $address->province_id) selected @endif>
+                                                            {{ $address->province }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="uk-form-help-block">Province</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-home-address-city" name="home_address_city" data-uk-tooltip="{pos:'top'}" title="City" @if(! $errors->any()) disabled @endif>
+                                                @if ($errors->any())
+                                                    <option value="0">&nbsp;</option>
+                                                    @foreach ($addresses->where('province_id', old('home_address_province'))->unique('city_id')->values() as $key => $address)
+                                                        <option value="{{ $address->city_id }}" @if(old('home_address_city') == $address->city_id) selected @endif>
+                                                            {{ $address->city }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="uk-form-help-block">City</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-home-address-baranggay" name="home_address_baranggay" ata-uk-tooltip="{pos:'top'}" title="Baranggay" @if(! $errors->any()) disabled @endif>
+                                                @if ($errors->any())
+                                                    <option value="0">&nbsp;</option>
+                                                    @foreach ($addresses->where('city_id', old('home_address_city'))->unique('baranggay_id')->values() as $key => $address)
+                                                        <option value="{{ $address->baranggay_id }}" @if(old('home_address_baranggay') == $address->baranggay_id) selected @endif>
+                                                            {{ $address->baranggay }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="uk-form-help-block">Baranggay</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <div class="uk-form-row">
+                                                <label>Street/Building/Subd/Village</label>
+                                                <textarea cols="30" rows="4" name="home_address" class="md-input">{{ old('home_address') }}</textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="uk-grid">
-                                <div class="uk-width-medium-1-1">
-                                    <div class="uk-form-row">
-                                        <label>Provincial Address</label>
-                                        <textarea cols="30" rows="4" name="provincial_address" class="md-input">{{ old('provincial_address') }}</textarea>
+                                <div class="uk-width-medium-1-2">
+                                    <h3 class="heading_c uk-margin-large-top uk-text-success uk-text-italic">Provincial Address</h3>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-provincial-address-region" name="provincial_address_region" data-uk-tooltip="{pos:'top'}" title="Region">
+                                                <option value="0">&nbsp;</option>
+                                                @foreach ($addresses->unique('region_id')->values() as $key => $address)
+                                                    @if ($errors->any())
+                                                        <option value="{{ $address->region_id }}" @if(old('provincial_address_region') == $address->region_id) selected @endif>
+                                                            {{ $address->region }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $address->region_id }}">
+                                                            {{ $address->region }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <span class="uk-form-help-block">Region</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-provincial-address-province" name="provincial_address_province" data-uk-tooltip="{pos:'top'}" title="Province" @if(! $errors->any()) disabled @endif>
+                                                @if ($errors->any())
+                                                    <option value="0">&nbsp;</option>
+                                                    @foreach ($addresses->where('region_id', old('provincial_address_region'))->unique('province_id')->values() as $key => $address)
+                                                        <option value="{{ $address->province_id }}" @if(old('provincial_address_province') == $address->province_id) selected @endif>
+                                                            {{ $address->province }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="uk-form-help-block">Province</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-provincial-address-city" name="provincial_address_city" data-uk-tooltip="{pos:'top'}" title="City" @if(! $errors->any()) disabled @endif>
+                                                @if ($errors->any())
+                                                    <option value="0">&nbsp;</option>
+                                                    @foreach ($addresses->where('province_id', old('provincial_address_province'))->unique('city_id')->values() as $key => $address)
+                                                        <option value="{{ $address->city_id }}" @if(old('provincial_address_city') == $address->city_id) selected @endif>
+                                                            {{ $address->city }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="uk-form-help-block">City</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <select id="select-provincial-address-baranggay" name="provincial_address_baranggay" ata-uk-tooltip="{pos:'top'}" title="Baranggay" @if(! $errors->any()) disabled @endif>
+                                                @if ($errors->any())
+                                                    <option value="0">&nbsp;</option>
+                                                    @foreach ($addresses->where('city_id', old('provincial_address_city'))->unique('baranggay_id')->values() as $key => $address)
+                                                        <option value="{{ $address->baranggay_id }}" @if(old('provincial_address_baranggay') == $address->baranggay_id) selected @endif>
+                                                            {{ $address->baranggay }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="uk-form-help-block">Baranggay</span>
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <div class="uk-form-row">
+                                                <label>Street/Building/Subd/Village</label>
+                                                <textarea cols="30" rows="4" name="provincial_address" class="md-input">{{ old('provincial_address') }}</textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -372,6 +507,8 @@
                 amaphil.date_picker_birthday();
                 amaphil.date_picker_prc_validity();
                 amaphil.date_range_phic_accreditation();
+                amaphil.select_home_address();
+                amaphil.select_provincial_address();
             },
             select_specialization: function() {
                 var xhr;
@@ -441,7 +578,213 @@
                 $dp_phic_accreditation_to.on('change',function() {
                     start_date.options.maxDate = $dp_phic_accreditation_to.val();
                 });
-            }
+            },
+            select_home_address: function() {
+                var xhr;
+                var select_home_address_region, $select_home_address_region;
+                var select_home_address_province, $select_home_address_province;
+                var select_home_address_city, $select_home_address_city;
+                var select_home_address_baranggay, $select_home_address_baranggay;
+
+                $select_home_address_region = $('#select-home-address-region').selectize({
+                    valueField: 'region_id',
+                    labelField: 'region',
+                    searchField: ['region'],
+
+                    onChange: function(value) {
+                        if (!value.length) return;
+                        select_home_address_baranggay.disable();
+                        select_home_address_baranggay.clearOptions();
+
+                        select_home_address_city.disable();
+                        select_home_address_city.clearOptions();
+
+                        select_home_address_province.disable();
+                        select_home_address_province.clearOptions();
+                        select_home_address_province.load(function(callback) {
+                            if (value == 0) return;
+                            xhr && xhr.abort();
+                            xhr = $.ajax({
+                                url: '/api/address/regions/' + value + '/provinces',
+                                success: function(results) {
+                                    select_home_address_province.enable();
+                                    callback(results);
+                                },
+                                error: function() {
+                                    callback();
+                                }
+                            })
+                        });
+                    }
+                });
+
+                $select_home_address_province = $('#select-home-address-province').selectize({
+                    valueField: 'province_id',
+                    labelField: 'province',
+                    searchField: ['province'],
+
+                    onChange: function(value) {
+                        if (!value.length) return;
+                        select_home_address_baranggay.disable();
+                        select_home_address_baranggay.clearOptions();
+
+                        select_home_address_city.disable();
+                        select_home_address_city.clearOptions();
+                        select_home_address_city.load(function(callback) {
+                            if (value == 0) return;
+                            xhr && xhr.abort();
+                            xhr = $.ajax({
+                                url: '/api/address/regions/provinces/' + value + '/cities',
+                                success: function(results) {
+                                    select_home_address_city.enable();
+                                    callback(results);
+                                },
+                                error: function() {
+                                    callback();
+                                }
+                            })
+                        });
+                    }
+                });
+                select_home_address_province = $select_home_address_province[0].selectize;
+
+                $select_home_address_city = $('#select-home-address-city').selectize({
+                    valueField: 'city_id',
+                    labelField: 'city',
+                    searchField: ['city'],
+
+                    onChange: function(value) {
+                        if (!value.length) return;
+                        select_home_address_baranggay.disable();
+                        select_home_address_baranggay.clearOptions();
+                        select_home_address_baranggay.load(function(callback) {
+                            if (value == 0) return;
+                            xhr && xhr.abort();
+                            xhr = $.ajax({
+                                url: '/api/address/regions/provinces/cities/' + value + '/baranggays',
+                                success: function(results) {
+                                    select_home_address_baranggay.enable();
+                                    callback(results);
+                                },
+                                error: function() {
+                                    callback();
+                                }
+                            })
+                        });
+                    }
+                });
+                select_home_address_city = $select_home_address_city[0].selectize;
+
+                $select_home_address_baranggay = $('#select-home-address-baranggay').selectize({
+                    valueField: 'baranggay_id',
+                    labelField: 'baranggay',
+                    searchField: ['baranggay'],
+                });
+                select_home_address_baranggay = $select_home_address_baranggay[0].selectize;
+            },
+            select_provincial_address: function() {
+                var xhr;
+                var select_provincial_address_region, $select_provincial_address_region;
+                var select_provincial_address_province, $select_provincial_address_province;
+                var select_provincial_address_city, $select_provincial_address_city;
+                var select_provincial_address_baranggay, $select_provincial_address_baranggay;
+
+                $select_provincial_address_region = $('#select-provincial-address-region').selectize({
+                    valueField: 'region_id',
+                    labelField: 'region',
+                    searchField: ['region'],
+
+                    onChange: function(value) {
+                        if (!value.length) return;
+                        select_provincial_address_baranggay.disable();
+                        select_provincial_address_baranggay.clearOptions();
+
+                        select_provincial_address_city.disable();
+                        select_provincial_address_city.clearOptions();
+
+                        select_provincial_address_province.disable();
+                        select_provincial_address_province.clearOptions();
+                        select_provincial_address_province.load(function(callback) {
+                            if (value == 0) return;
+                            xhr && xhr.abort();
+                            xhr = $.ajax({
+                                url: '/api/address/regions/' + value + '/provinces',
+                                success: function(results) {
+                                    select_provincial_address_province.enable();
+                                    callback(results);
+                                },
+                                error: function() {
+                                    callback();
+                                }
+                            })
+                        });
+                    }
+                });
+
+                $select_provincial_address_province = $('#select-provincial-address-province').selectize({
+                    valueField: 'province_id',
+                    labelField: 'province',
+                    searchField: ['province'],
+
+                    onChange: function(value) {
+                        if (!value.length) return;
+                        select_provincial_address_baranggay.disable();
+                        select_provincial_address_baranggay.clearOptions();
+
+                        select_provincial_address_city.disable();
+                        select_provincial_address_city.clearOptions();
+                        select_provincial_address_city.load(function(callback) {
+                            if (value == 0) return;
+                            xhr && xhr.abort();
+                            xhr = $.ajax({
+                                url: '/api/address/regions/provinces/' + value + '/cities',
+                                success: function(results) {
+                                    select_provincial_address_city.enable();
+                                    callback(results);
+                                },
+                                error: function() {
+                                    callback();
+                                }
+                            })
+                        });
+                    }
+                });
+                select_provincial_address_province = $select_provincial_address_province[0].selectize;
+
+                $select_provincial_address_city = $('#select-provincial-address-city').selectize({
+                    valueField: 'city_id',
+                    labelField: 'city',
+                    searchField: ['city'],
+
+                    onChange: function(value) {
+                        if (!value.length) return;
+                        select_provincial_address_baranggay.disable();
+                        select_provincial_address_baranggay.clearOptions();
+                        select_provincial_address_baranggay.load(function(callback) {
+                            if (value == 0) return;
+                            xhr && xhr.abort();
+                            xhr = $.ajax({
+                                url: '/api/address/regions/provinces/cities/' + value + '/baranggays',
+                                success: function(results) {
+                                    select_provincial_address_baranggay.enable();
+                                    callback(results);
+                                },
+                                error: function() {
+                                    callback();
+                                }
+                            })
+                        });
+                    }
+                });
+                select_provincial_address_city = $select_provincial_address_city[0].selectize;
+
+                $select_provincial_address_baranggay = $('#select-provincial-address-baranggay').selectize({
+                    valueField: 'baranggay_id',
+                    labelField: 'baranggay',
+                    searchField: ['baranggay'],
+                });
+                select_provincial_address_baranggay = $select_provincial_address_baranggay[0].selectize;
+            },
         }
     </script>
 @endsection
