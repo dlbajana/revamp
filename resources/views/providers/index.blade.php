@@ -58,7 +58,7 @@
                         <tr>
                             <td><a href="{{ route('providers.show', $provider->id) }}">{{ sprintf('%06d', $provider->id) }}</a></td>
                             <td><a href="{{ route('providers.show', $provider->id) }}">{{ $provider->name }}</a></td>
-                            <td>Metro Manila</td>
+                            <td>{{ optional($provider->addressProvince)->province }}</td>
                             <td>
                                 <span class="uk-badge @if($provider->accreditation_status == 'disaccredited') uk-badge-danger @elseif($provider->accreditation_status == 'non-accredited') uk-badge-warning @endif">
                                     {{ strtoupper($provider->accreditation_status) }}

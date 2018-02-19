@@ -160,7 +160,7 @@
                         <div class="uk-width-medium-1-1">
                             <div class="uk-form-row">
                                 <label>Business Address</label>
-                                <textarea cols="30" rows="2" class="md-input label-fixed" readonly>{{ $provider->address }}</textarea>
+                                <textarea cols="30" rows="2" class="md-input label-fixed" readonly>{{ $provider->completeBusinessAddress() }}</textarea>
                             </div>
                         </div>
                     </div>

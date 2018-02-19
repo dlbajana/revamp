@@ -382,4 +382,31 @@ class Provider extends Model
             ]);
         }
     }
+
+    public function completeBusinessAddress()
+    {
+        $address = $this->address;
+
+        if ($baranggay = $this->addressBaranggay) {
+            $address = $address . ', ' . $baranggay->baranggay;
+        }
+
+        if ($city = $this->addressCity) {
+            $address = $address . ', ' . $city->city;
+
+            if ($baranggay = $this->addressBaranggay) {
+                $address = $address . ' ' . $baranggay->zipcode;
+            }
+        }
+
+        if ($province = $this->addressProvince) {
+            $address = $address . ', ' . $province->province;
+        }
+
+        if ($region = $this->addressRegion) {
+            $address = $address . ', ' . $region->region;
+        }
+
+        return $address;
+    }
 }
