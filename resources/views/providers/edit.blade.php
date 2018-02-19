@@ -314,7 +314,7 @@
                             <div class="uk-grid">
                                 <div class="uk-width-medium-1-1">
                                     <div class="uk-form-row">
-                                        <label>Complete Business Address</label>
+                                        <label>Street/Building/Subd/Village</label>
                                         <textarea cols="30" rows="4" name="address" class="md-input">{{ old('address') ?: $provider->address }}</textarea> </div>
                                 </div>
                             </div>
