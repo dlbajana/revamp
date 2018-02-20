@@ -40,7 +40,10 @@ class UserController extends Controller
 
         $user = User::create($validatedUser);
 
-        session()->flash('notify', ['message' => 'User Profile has been created successfully!', 'type' => 'success']);
+        session()->flash('notify', [
+            'message' => 'User Profile has been created successfully!',
+            'type' => 'success'
+        ]);
 
         return redirect()->route('users.index');
     }

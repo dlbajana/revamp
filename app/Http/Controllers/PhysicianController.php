@@ -27,7 +27,9 @@ class PhysicianController extends Controller
         $nationalities = Nationality::all();
         $addresses = Address::all();
 
-        return view('physicians.create', compact('specializations', 'nationalities', 'addresses'));
+        return view('physicians.create', compact(
+            'specializations', 'nationalities', 'addresses'
+        ));
     }
 
     public function store(Request $request)
@@ -40,7 +42,10 @@ class PhysicianController extends Controller
 
         Physician::createFromRequest($request);
 
-        session()->flash('notify', ['message' => 'Physician Enrollment Successful!', 'type' => 'success']);
+        session()->flash('notify', [
+            'message' => 'Physician Enrollment Successful!',
+            'type' => 'success'
+        ]);
 
         return redirect()->route('physicians.index');
     }
@@ -56,7 +61,9 @@ class PhysicianController extends Controller
         $nationalities = Nationality::all();
         $addresses = Address::all();
 
-        return view('physicians.edit', compact('physician', 'specializations', 'nationalities', 'addresses'));
+        return view('physicians.edit', compact(
+            'physician', 'specializations', 'nationalities', 'addresses'
+        ));
     }
 
     public function update(Request $request, Physician $physician)
@@ -69,7 +76,10 @@ class PhysicianController extends Controller
 
         $physician->updateFromRequest($request);
 
-        session()->flash('notify', ['message' => 'Physician Profile has been updated!', 'type' => 'success']);
+        session()->flash('notify', [
+            'message' => 'Physician Profile has been updated!',
+            'type' => 'success'
+        ]);
 
         return redirect()->route('physicians.index');
     }
@@ -90,10 +100,15 @@ class PhysicianController extends Controller
                 'accreditation_status' => $physicianAction->status,
             ]);
 
-            $physician->logChangeAccreditationStatus($physicianAction->status, $physicianAction->created_by);
+            $physician->logChangeAccreditationStatus(
+                $physicianAction->status, $physicianAction->created_by
+            );
         }
 
-        session()->flash('notify', ['message' => 'Physician status has been updated!', 'type' => 'success']);
+        session()->flash('notify', [
+            'message' => 'Physician status has been updated!',
+            'type' => 'success'
+        ]);
 
         return redirect()->route('physicians.index');
     }

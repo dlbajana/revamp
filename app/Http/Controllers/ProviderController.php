@@ -62,7 +62,9 @@ class ProviderController extends Controller
         $physicians = Physician::whereNotIn('id', $provider->physicians->pluck('id'))
                         ->get();
 
-        return view('providers.edit', compact('provider', 'addresses', 'physicians'));
+        return view('providers.edit', compact(
+            'provider', 'addresses', 'physicians'
+        ));
     }
 
     public function update(Request $request, Provider $provider)
@@ -90,7 +92,9 @@ class ProviderController extends Controller
                         ]);
 
                         // Log the affiliation of physician to provider
-                        $provider->logAffiliatePhysician($physicianProvider->physician);
+                        $provider->logAffiliatePhysician(
+                            $physicianProvider->physician
+                        );
                     }
                 }
 
