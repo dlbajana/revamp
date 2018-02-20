@@ -63,6 +63,7 @@
                                 <span class="uk-badge @if($physician->accreditation_status == 'disaccredited') uk-badge-danger @elseif($physician->accreditation_status == 'non-accredited') uk-badge-warning @endif">
                                     {{ strtoupper($physician->accreditation_status) }}
                                 </span>
+                            </td>
                             <td>
                                 <span class="uk-badge @if($physician->status == 'inactive') uk-badge-danger @endif">
                                     {{ strtoupper($physician->status) }}
