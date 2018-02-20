@@ -7,6 +7,7 @@ use App\User;
 use App\PhysicianLog;
 use App\PhysicianAction;
 use App\Address;
+use App\Provider;
 
 class Physician extends Model
 {
@@ -89,6 +90,11 @@ class Physician extends Model
     public function physicianActions()
     {
         return $this->hasMany(PhysicianAction::class, 'physician_id');
+    }
+
+    public function providers()
+    {
+        return $this->belongsToMany(Provider::class);
     }
 
     public function fullName()

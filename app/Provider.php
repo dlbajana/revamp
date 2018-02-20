@@ -9,6 +9,8 @@ use App\ProviderContactPerson;
 use App\ProviderAction;
 use App\ProviderLog;
 use App\Address;
+use App\Physician;
+use App\PhysicianProvider;
 
 class Provider extends Model
 {
@@ -88,11 +90,28 @@ class Provider extends Model
         return $this->hasMany(ProviderAction::class, 'provider_id');
     }
 
-    public function logChangeAccreditationStatus($status, $createdById)
+    public function physicians()
+    {
+        return $this->belongsToMany(Physician::class, 'physician_provider', 'provider_id', 'physician_id')
+            ->using(PhysicianProvider::class)
+            ->withTimestamps()
+            ->withPivot('room_no', 'schedule')
+            ->as('affiliation');
+    }
+
+    public function logChangeAccreditationStatus($status, $createdById = null)
     {
         $this->providerLogs()->create([
             'title' => 'Change Accreditation Status to ' . strtoupper($status),
-            'created_by' => $createdById,
+            'created_by' => $createdById ?: auth()->user()->id,
+        ]);
+    }
+
+    public function logAffiliatePhysician($physician, $createdById = null)
+    {
+        $this->providerLogs()->create([
+            'title' => 'Affiliate Physician: ' . $physician->fullName(),
+            'created_by' => $createdById ?: auth()->user()->id,
         ]);
     }
 
