@@ -24,32 +24,17 @@ Route::get('specializations/{specialization}/subspecializations', function($spec
 });
 
 Route::get('address/regions', function() {
-    return Address::select('region_id', 'region')
-        ->get()
-        ->unique('region_id')
-        ->values();
+    return Address::regions();
 });
 
 Route::get('address/regions/{region}/provinces', function($region) {
-    return Address::select('province_id', 'province')
-        ->where('region_id', $region)
-        ->get()
-        ->unique('province_id')
-        ->values();
+    return Address::provinces($region);
 });
 
 Route::get('address/regions/provinces/{province}/cities', function($province) {
-    return Address::select('city_id', 'city')
-        ->where('province_id', $province)
-        ->get()
-        ->unique('city_id')
-        ->values();
+    return Address::cities($province);
 });
 
 Route::get('address/regions/provinces/cities/{city}/baranggays', function($city) {
-    return Address::select('baranggay_id', 'baranggay', 'zipcode')
-        ->where('city_id', $city)
-        ->get()
-        ->unique('baranggay_id')
-        ->values();
+    return Address::baranggays($city);
 });

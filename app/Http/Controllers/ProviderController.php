@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Provider;
 use App\ProviderAction;
-use App\Address;
 use App\Physician;
 use App\PhysicianProvider;
 
@@ -27,8 +27,7 @@ class ProviderController extends Controller
 
     public function create()
     {
-        $addresses = Address::all();
-        return view('providers.create', compact('addresses'));
+        return view('providers.create');
     }
 
     public function store(Request $request)
@@ -58,13 +57,10 @@ class ProviderController extends Controller
 
     public function edit(Provider $provider)
     {
-        $addresses = Address::all();
         $physicians = Physician::whereNotIn('id', $provider->physicians->pluck('id'))
                         ->get();
 
-        return view('providers.edit', compact(
-            'provider', 'addresses', 'physicians'
-        ));
+        return view('providers.edit', compact('provider', 'physicians'));
     }
 
     public function update(Request $request, Provider $provider)

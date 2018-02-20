@@ -289,7 +289,7 @@
                                         <div class="uk-width-1-1">
                                             <select id="select-home-address-region" name="home_address_region" data-uk-tooltip="{pos:'top'}" title="Region">
                                                 <option value="0">&nbsp;</option>
-                                                @foreach ($addresses->unique('region_id')->values() as $key => $address)
+                                                @foreach (App\Address::regions() as $key => $address)
                                                     @if ($errors->any())
                                                         <option value="{{ $address->region_id }}" @if(old('home_address_region') == $address->region_id) selected @endif>
                                                             {{ $address->region }}
@@ -309,14 +309,14 @@
                                             <select id="select-home-address-province" name="home_address_province" data-uk-tooltip="{pos:'top'}" title="Province">
                                                 @if ($errors->any())
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('region_id', old('home_address_region'))->unique('province_id')->values() as $key => $address)
+                                                    @foreach (App\Address::provinces(old('home_address_region')) as $key => $address)
                                                         <option value="{{ $address->province_id }}" @if(old('home_address_province') == $address->province_id) selected @endif>
                                                             {{ $address->province }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('region_id', $physician->home_address_region_id)->unique('province_id')->values() as $key => $address)
+                                                    @foreach (App\Address::provinces($physician->home_address_region_id) as $key => $address)
                                                         <option value="{{ $address->province_id }}" @if($physician->home_address_province_id == $address->province_id) selected @endif>
                                                             {{ $address->province }}
                                                         </option>
@@ -331,14 +331,14 @@
                                             <select id="select-home-address-city" name="home_address_city" data-uk-tooltip="{pos:'top'}" title="City">
                                                 @if ($errors->any())
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('province_id', old('home_address_province'))->unique('city_id')->values() as $key => $address)
+                                                    @foreach (App\Address::cities(old('home_address_province')) as $key => $address)
                                                         <option value="{{ $address->city_id }}" @if(old('home_address_city') == $address->city_id) selected @endif>
                                                             {{ $address->city }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('province_id', $physician->home_address_province_id)->unique('city_id')->values() as $key => $address)
+                                                    @foreach (App\Address::cities($physician->home_address_province_id) as $key => $address)
                                                         <option value="{{ $address->city_id }}" @if($physician->home_address_city_id == $address->city_id) selected @endif>
                                                             {{ $address->city }}
                                                         </option>
@@ -353,14 +353,14 @@
                                             <select id="select-home-address-baranggay" name="home_address_baranggay" ata-uk-tooltip="{pos:'top'}" title="Baranggay">
                                                 @if ($errors->any())
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('city_id', old('home_address_city'))->unique('baranggay_id')->values() as $key => $address)
+                                                    @foreach (App\Address::baranggays(old('home_address_city')) as $key => $address)
                                                         <option value="{{ $address->baranggay_id }}" @if(old('home_address_baranggay') == $address->baranggay_id) selected @endif>
                                                             {{ $address->baranggay }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('city_id', $physician->home_address_city_id)->unique('baranggay_id')->values() as $key => $address)
+                                                    @foreach (App\Address::baranggays($physician->home_address_city_id) as $key => $address)
                                                         <option value="{{ $address->baranggay_id }}" @if($physician->home_address_baranggay_id == $address->baranggay_id) selected @endif>
                                                             {{ $address->baranggay }}
                                                         </option>
@@ -385,7 +385,7 @@
                                         <div class="uk-width-1-1">
                                             <select id="select-provincial-address-region" name="provincial_address_region" data-uk-tooltip="{pos:'top'}" title="Region">
                                                 <option value="0">&nbsp;</option>
-                                                @foreach ($addresses->unique('region_id')->values() as $key => $address)
+                                                @foreach (App\Address::regions() as $key => $address)
                                                     @if ($errors->any())
                                                         <option value="{{ $address->region_id }}" @if(old('provincial_address_region') == $address->region_id) selected @endif>
                                                             {{ $address->region }}
@@ -405,14 +405,14 @@
                                             <select id="select-provincial-address-province" name="provincial_address_province" data-uk-tooltip="{pos:'top'}" title="Province">
                                                 @if ($errors->any())
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('region_id', old('provincial_address_region'))->unique('province_id')->values() as $key => $address)
+                                                    @foreach (App\Address::provinces(old('provincial_address_region')) as $key => $address)
                                                         <option value="{{ $address->province_id }}" @if(old('provincial_address_province') == $address->province_id) selected @endif>
                                                             {{ $address->province }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('region_id', $physician->provincial_address_region_id)->unique('province_id')->values() as $key => $address)
+                                                    @foreach (App\Address::provinces($physician->provincial_address_region_id) as $key => $address)
                                                         <option value="{{ $address->province_id }}" @if($physician->provincial_address_province_id == $address->province_id) selected @endif>
                                                             {{ $address->province }}
                                                         </option>
@@ -427,14 +427,14 @@
                                             <select id="select-provincial-address-city" name="provincial_address_city" data-uk-tooltip="{pos:'top'}" title="City">
                                                 @if ($errors->any())
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('province_id', old('provincial_address_province'))->unique('city_id')->values() as $key => $address)
+                                                    @foreach (App\Address::cities(old('provincial_address_province')) as $key => $address)
                                                         <option value="{{ $address->city_id }}" @if(old('provincial_address_city') == $address->city_id) selected @endif>
                                                             {{ $address->city }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('province_id', $physician->provincial_address_province_id)->unique('city_id')->values() as $key => $address)
+                                                    @foreach (App\Address::cities($physician->provincial_address_province_id) as $key => $address)
                                                         <option value="{{ $address->city_id }}" @if($physician->provincial_address_city_id == $address->city_id) selected @endif>
                                                             {{ $address->city }}
                                                         </option>
@@ -449,14 +449,14 @@
                                             <select id="select-provincial-address-baranggay" name="provincial_address_baranggay" ata-uk-tooltip="{pos:'top'}" title="Baranggay">
                                                 @if ($errors->any())
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('city_id', old('provincial_address_city'))->unique('baranggay_id')->values() as $key => $address)
+                                                    @foreach (App\Address::baranggays(old('provincial_address_city')) as $key => $address)
                                                         <option value="{{ $address->baranggay_id }}" @if(old('provincial_address_baranggay') == $address->baranggay_id) selected @endif>
                                                             {{ $address->baranggay }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     <option value="0">&nbsp;</option>
-                                                    @foreach ($addresses->where('city_id', $physician->provincial_address_city_id)->unique('baranggay_id')->values() as $key => $address)
+                                                    @foreach (App\Address::baranggays($physician->provincial_address_city_id) as $key => $address)
                                                         <option value="{{ $address->baranggay_id }}" @if($physician->provincial_address_baranggay_id == $address->baranggay_id) selected @endif>
                                                             {{ $address->baranggay }}
                                                         </option>
