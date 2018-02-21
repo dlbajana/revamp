@@ -16,6 +16,14 @@ class ProvidersTableSeeder extends Seeder
                 'title' => 'Create Provider Record',
                 'remarks' => '*** System Generated Record',
             ]);
+
+            $departments = ['HMO / Industrial', 'Admitting', 'Emergency', 'Billing', 'Credit and Collection'];
+
+            foreach ($departments as $key => $department) {
+                $u->providerContactPersons()->create([
+                    'department' => $department,
+                ]);
+            }
         });
     }
 }
