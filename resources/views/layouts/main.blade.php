@@ -247,19 +247,26 @@
                         <span class="menu_title">Dashboard</span>
                     </a>
                 </li>
-                <li class="@yield('nav_providers')" title="Providers">
-                    <a href="{{ route('providers.index') }}">
+                <li @yield('nav_medical') title="Medical">
+                    <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE548;</i></span>
-                        <span class="menu_title">Providers</span>
+                        <span class="menu_title">Medical</span>
                     </a>
+                    <ul>
+                        <li class="@yield('nav_providers')" title="Providers">
+                            <a href="{{ route('providers.index') }}">
+                                <span class="menu_title">Providers</span>
+                            </a>
+                        </li>
+                        <li class="@yield('nav_physicians')" title="Physicians">
+                            <a href="{{ route('physicians.index') }}">
+                                <span class="menu_title">Physicians</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="@yield('nav_physicians')" title="Physicians">
-                    <a href="{{ route('physicians.index') }}">
-                        <span class="menu_icon"><i class="material-icons">&#xE85E;</i></span>
-                        <span class="menu_title">Physicians</span>
-                    </a>
-                </li>
-                <li title="Corporate">
+
+                <li class="@yield('nav_corporate')" title="Corporate">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">&#xE0AF;</i></span>
                         <span class="menu_title">Corporate</span>

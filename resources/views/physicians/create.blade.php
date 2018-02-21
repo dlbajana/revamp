@@ -1,7 +1,11 @@
 @extends('layouts.main')
 
-@section('nav_physicians')
+@section('nav_medical')
     current_section
+@endsection
+
+@section('nav_physicians')
+    act_item
 @endsection
 
 @section('breadcrumbs')
