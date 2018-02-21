@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Physician;
 use App\Specialization;
 use App\Nationality;
+use App\Provider;
+use App\PhysicianProvider;
 use Illuminate\Http\Request;
 
 class PhysicianController extends Controller
@@ -16,7 +18,10 @@ class PhysicianController extends Controller
 
     public function index()
     {
-        $physicians = Physician::orderBy('id', 'desc')->get();
+        $physicians = Physician::with(['providers', 'physicianLogs'])
+                        ->orderBy('id', 'desc')
+                        ->get();
+
         return view('physicians.index', compact('physicians'));
     }
 
@@ -50,6 +55,7 @@ class PhysicianController extends Controller
 
     public function show(Physician $physician)
     {
+        $physician->load('providers', 'physicianLogs', 'providers.providerContactPersons');
         return view('physicians.show', compact('physician'));
     }
 
@@ -58,8 +64,11 @@ class PhysicianController extends Controller
         $specializations = Specialization::all();
         $nationalities = Nationality::all();
 
+        $providers = Provider::whereNotIn('id', $physician->providers->pluck('id'))
+                        ->get();
+
         return view('physicians.edit', compact(
-            'physician', 'specializations', 'nationalities'
+            'physician', 'specializations', 'nationalities', 'providers'
         ));
     }
 
@@ -70,6 +79,30 @@ class PhysicianController extends Controller
             'last_name' => 'required',
             'tin' => 'required|unique:physicians,tin,' . $physician->id,
         ]);
+
+        if ($providers = $request->provider) {
+            foreach ($providers as $key => $providerId) {
+                if ($providerId) {
+                    $physicianProvider = PhysicianProvider::where('physician_id', $physician->id)
+                                            ->where('provider_id', $providerId)
+                                            ->first();
+
+                    if (! $physicianProvider) {
+                        $physicianProvider = PhysicianProvider::create([
+                            'physician_id' => $physician->id,
+                            'provider_id' => $providerId,
+                            'room_no' => $request->room_no[$key],
+                            'schedule' => $request->schedule[$key],
+                        ]);
+
+                        // Log the affiliation of physician to provider
+                        $physician->logAffiliatePhysician(
+                                $physician
+                        );
+                    }
+                }
+            }
+        }
 
         $physician->updateFromRequest($request);
 

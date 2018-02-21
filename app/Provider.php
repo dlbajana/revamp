@@ -388,7 +388,9 @@ class Provider extends Model
         $this->logUpdateProviderRecord();
 
         foreach ($request->contact_person_department as $key => $contactPersonDepartment) {
-            $providerContactPersons = $this->providerContactPersons->where('department', $contactPersonDepartment)->first();
+            $providerContactPersons = $this->providerContactPersons
+                                        ->where('department', $contactPersonDepartment)
+                                        ->first();
 
             optional($providerContactPersons)->update([
                 'name' => $request->contact_person_name[$key],

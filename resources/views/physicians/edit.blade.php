@@ -36,6 +36,7 @@
             <ul class="uk-tab uk-tab-grid" data-uk-tab="{connect:'#tab_physicians', animation:'slide-horizontal'}">
                 <li class="uk-active"><a href="#">Information</a></li>
                 <li class="uk-width-1-6"><a href="#">License</a></li>
+                <li class="uk-width-1-6"><a href="#">Affiliation</a></li>
             </ul>
             <form action="{{ route('physicians.update', $physician->id) }}" method="post">
                 {{ method_field('PUT') }}
@@ -535,6 +536,48 @@
                         </div>
                     </li>
                     {{-- END LICENSE --}}
+
+                    {{-- START AFFILIATION --}}
+                    <li>
+                        <div class="md-card-content">
+                            <div class="uk-grid uk-grid-medium form_section form_section_separator" id="provider_row" data-uk-grid-match>
+                                <div class="uk-width-9-10">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-2-4">
+                                            <div class="parsley-row">
+                                                <select id="d_form_select_country" name="provider[]" data-md-selectize data-md-selectize-bottom disabled>
+                                                    <option value="">&nbsp;</option>
+                                                    @foreach ($providers as $key => $provider)
+                                                        <option value="{{ $provider->id }}">{{ $provider->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-4">
+                                            <div class="parsley-row">
+                                                <label>Room No</label>
+                                                <input type="text" class="md-input" name="room_no[]" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-4">
+                                            <div class="parsley-row">
+                                                <label>Schedule</label>
+                                                <input type="text" class="md-input" name="schedule_no[]" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-10 uk-text-center">
+                                    <div class="uk-vertical-align uk-height-1-1">
+                                        <div class="uk-vertical-align-middle">
+                                            <a href="#" class="btn-add-provider" data-section-clone="#provider_row"><i class="material-icons md-36">&#xE146;</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{-- END AFFILIATION --}}
                 </ul>
                 <div class="uk-grid">
                     <div class="uk-width-medium-1-1">
@@ -561,6 +604,7 @@
                 amaphil.date_range_phic_accreditation();
                 amaphil.select_home_address();
                 amaphil.select_provincial_address();
+                amaphil.affiliation_fields();
             },
             select_specialization: function() {
                 var xhr;
@@ -839,6 +883,150 @@
                 });
                 select_provincial_address_baranggay = $select_provincial_address_baranggay[0].selectize;
             },
+            affiliation_fields: function() {
+                // clone section
+                $('.btn-add-provider').on('click', function(e) {
+                    e.preventDefault();
+                    var $this = $(this),
+                        section_to_clone = $this.attr('data-section-clone'),
+                        section_number = $(section_to_clone).parent().children('[data-section-added]:last').attr('data-section-added') ? parseInt($(section_to_clone).parent().children('[data-section-added]:last').attr('data-section-added')) + 1 : 1,
+                        cloned_section = $(section_to_clone).clone();
+
+                        cloned_section
+                            .attr('data-section-added',section_number)
+                            .removeAttr('id')
+                            // inputs
+                            .find('.md-input').each(function(index) {
+                                var $thisInput = $(this),
+                                    name = $thisInput.attr('name');
+
+                                $thisInput
+                                    .val('')
+                                    .attr('disabled', false)
+
+                                altair_md.update_input($thisInput);
+                            })
+                            .end()
+                            // replace clone button with remove button
+                            .find('.btn-add-provider').replaceWith('<a href="#" class="btnSectionRemove"><i class="material-icons md-36">&#xE872;</i></a>')
+                            .end()
+                            // clear checkboxes
+                            .find('[data-md-icheck]:checkbox').each(function(index) {
+                                var $thisInput = $(this),
+                                    name = $thisInput.attr('name'),
+                                    id = $thisInput.attr('id'),
+                                    $inputLabel = cloned_section.find('label[for="'+ id +'"]'),
+                                    newName = name ? name + '-s'+section_number +':cb'+ index +'' : 's'+section_number +':cb'+ index;
+                                    newId = id ? id + '-s'+section_number +':cb'+ index +'' : 's'+section_number +':cb'+ index;
+
+                                $thisInput
+                                    .attr('name', newName)
+                                    .attr('id', newId)
+                                    .removeAttr('style').removeAttr('checked').unwrap().next('.iCheck-helper').remove();
+
+                                $inputLabel.attr('for', newId);
+                            })
+                            .end()
+                            // clear radio
+                            .find('.dynamic_radio').each(function(index) {
+                                var $this = $(this),
+                                    thisIndex = index;
+
+                                $this.find('[data-md-icheck]').each(function(index) {
+                                    var $thisInput = $(this),
+                                        name = $thisInput.attr('name'),
+                                        id = $thisInput.attr('id'),
+                                        $inputLabel = cloned_section.find('label[for="'+ id +'"]'),
+                                        newName = name ? name + '-s'+section_number +':cb'+ thisIndex +'' : '[s'+section_number +':cb'+ thisIndex;
+                                        newId = id ? id + '-s'+section_number +':cb'+ index +'' : 's'+section_number +':cb'+ index;
+
+                                    $thisInput
+                                        .attr('name', newName)
+                                        .attr('id', newId)
+                                        .attr('data-parsley-multiple', newName)
+                                        .removeAttr('data-parsley-id')
+                                        .removeAttr('style').removeAttr('checked').unwrap().next('.iCheck-helper').remove();
+
+                                    $inputLabel.attr('for', newId);
+                                })
+                            })
+                            .end()
+                            // switchery
+                            .find('[data-switchery]').each(function(index) {
+                                var $thisInput = $(this),
+                                    name = $thisInput.attr('name'),
+                                    id = $thisInput.attr('id'),
+                                    $inputLabel = cloned_section.find('label[for="'+ id +'"]'),
+                                    newName = name ? name + '-s'+section_number +':sw'+ index +'' : 's'+section_number +':sw'+ index,
+                                    newId = id ? id + '-s'+section_number +':sw'+ index +'' : 's'+section_number +':sw'+ index;
+
+                                $thisInput
+                                    .attr('name', newName)
+                                    .attr('id', newId)
+                                    .removeAttr('style').removeAttr('checked').next('.switchery').remove();
+
+                                $inputLabel.attr('for', newId);
+
+                            })
+                            .end()
+                            // selectize
+                            .find('[data-md-selectize]').each(function(index) {
+                                    var $thisSelect = $(this),
+                                        name = $thisSelect.attr('name'),
+                                        id = $thisSelect.attr('id'),
+                                        orgSelect = $('#'+id),
+                                        newName = name ? name + '-s'+section_number +':sel'+ index +'' : 's'+section_number +':sel'+ index,
+                                        newId = id ? id + '-s'+section_number +':sel'+ index +'' : 's'+section_number +':sel'+ index;
+
+                                // destroy selectize
+                                var selectize = orgSelect[0].selectize;
+                                if(selectize) {
+                                    selectize.destroy();
+                                    orgSelect.val('').next('.selectize_fix').remove();
+                                    var clonedOptions = orgSelect.html();
+                                    altair_forms.select_elements(orgSelect.parent());
+
+                                    $thisSelect
+                                        .html(clonedOptions)
+                                        .attr('name', newName)
+                                        .attr('disabled', false)
+                                        .attr('id', newId)
+                                        .removeClass('selectized')
+                                        .next('.selectize-control').remove()
+                                        .end()
+                                        .next('.selectize_fix').remove();
+
+                                    // var controller = $thisSelect[0].selectize;
+                                    // controller.destroy();
+                                }
+
+                            });
+
+                    $(section_to_clone).before(cloned_section);
+
+
+                    var $newSection = $(section_to_clone).prev();
+
+                    if($newSection.hasClass('form_section_separator')) {
+                        $newSection.after('<hr class="form_hr">')
+                    }
+
+                    // reinitialize checkboxes
+                    altair_md.checkbox_radio($newSection.find('[data-md-icheck]'));
+                    // reinitialize switches
+                    altair_forms.switches($newSection);
+                    // reinitialize selectize
+                    altair_forms.select_elements($newSection);
+
+                });
+
+                // remove section
+                $('#page_content').on('click', '.btnSectionRemove', function(e) {
+                    e.preventDefault();
+                    var $this = $(this);
+                    $this.closest('.form_section').remove();
+                })
+            }
         }
     </script>
 @endsection

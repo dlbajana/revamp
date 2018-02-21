@@ -110,6 +110,14 @@ class Physician extends Model
         ]);
     }
 
+    public function logAffiliatePhysician($physician, $createdById = null)
+    {
+        $this->physicianLogs()->create([
+            'title' => 'Affiliate Provider: ' . $physician->fullName(),
+            'created_by' => $createdById ?: auth()->user()->id,
+        ]);
+    }
+
     public function logCreatePhysicianRecord()
     {
         $this->physicianLogs()->create([
