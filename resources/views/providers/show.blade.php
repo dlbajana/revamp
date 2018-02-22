@@ -32,7 +32,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="uk-display-inline-block"><i class="md-icon md-icon-light material-icons" id="page_print">&#xE8ad;</i></div>
+                <div class="uk-display-inline-block"><i class="md-icon md-icon-light material-icons" id="provider_print">&#xE8ad;</i></div>
             </div>
             <div class="user_heading_avatar">
                 <div class="thumbnail">
@@ -738,6 +738,24 @@
                     } );
                 });
             }
+
+            $body.on('click','#provider_print',function(e) {
+                e.preventDefault();
+                UIkit.modal.confirm('Do you want to print Provider Enrollment Form?', function () {
+                    var win = window.open('{{ route('providers.print', $provider->id) }}', '_blank');
+                    if (win) {
+                        //Browser has allowed it to be opened
+                        win.focus();
+                    } else {
+                        //Browser has blocked it
+                        alert('Please allow popups for this website');
+                    }
+                }, {
+                    labels: {
+                        'Ok': 'print'
+                    }
+                });
+            });
         });
     </script>
 @endsection

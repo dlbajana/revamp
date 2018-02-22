@@ -135,4 +135,11 @@ class ProviderController extends Controller
 
         return redirect()->route('providers.index');
     }
+
+    public function printDocument(Request $request, Provider $provider)
+    {
+        $provider->load('providerContactPersons');
+        $pdf = \PDF::loadView('providers.provider-enrollment-form', compact('provider'))->setPaper('legal', 'portrait');
+        return $pdf->stream('provider-enrollment-form.pdf');
+    }
 }
