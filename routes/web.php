@@ -26,4 +26,5 @@ Route::resource('providers', 'ProviderController', ['except' => ['destroy']]);
 |--------------------------------------------------------------------------
 */
 Route::post('physicians/{physician}/action', 'PhysicianController@action')->name('physicians.action');
+Route::get('physicians/{physician}/print', 'PhysicianController@printDocument')->name('physicians.print');
 Route::resource('physicians', 'PhysicianController', ['except' => ['destroy']]);

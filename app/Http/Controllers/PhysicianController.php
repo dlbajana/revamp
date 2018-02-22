@@ -142,4 +142,14 @@ class PhysicianController extends Controller
 
         return redirect()->route('physicians.index');
     }
+
+    public function printDocument(Request $request, Physician $physician)
+    {
+        $physician->load('providers.providerContactPersons');
+
+        $pdf = \PDF::loadView('physicians.doctor-accreditation-form', compact('physician'))
+                    ->setPaper('legal', 'portrait');
+
+        return $pdf->stream('doctor-accreditation-form.pdf');
+    }
 }

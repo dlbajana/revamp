@@ -139,7 +139,9 @@ class ProviderController extends Controller
     public function printDocument(Request $request, Provider $provider)
     {
         $provider->load('providerContactPersons');
-        $pdf = \PDF::loadView('providers.provider-enrollment-form', compact('provider'))->setPaper('legal', 'portrait');
+        $pdf = \PDF::loadView('providers.provider-enrollment-form', compact('provider'))
+                    ->setPaper('legal', 'portrait');
+                    
         return $pdf->stream('provider-enrollment-form.pdf');
     }
 }
