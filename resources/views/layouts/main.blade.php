@@ -274,7 +274,7 @@
                             </a>
                         </li>
                         <li class="@yield('nav_rvu')" title="RVU">
-                            <a href="#">
+                            <a href="{{ route('rvu.index') }}">
                                 <span class="menu_title">RVU</span>
                             </a>
                         </li>

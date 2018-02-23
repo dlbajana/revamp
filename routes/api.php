@@ -40,3 +40,5 @@ Route::get('address/regions/provinces/cities/{city}/baranggays', function($city)
 });
 
 Route::get('datatables/icd', 'DatatableController@icd');
+
+Route::get('datatables/rvu', 'DatatableController@rvu');

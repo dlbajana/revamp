@@ -32,6 +32,29 @@ class DatatableController extends Controller
             SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )
         );
     }
+
+    public function rvu(Request $request)
+    {
+        $table = 'rvu';
+        $primaryKey = 'id';
+
+        $columns = [
+            ['db' => 'code', 'dt' => 0],
+            ['db' => 'description', 'dt' => 1],
+            ['db' => 'value', 'dt' => 2],
+        ];
+
+        $sql_details = [
+            'user' => env('DB_USERNAME', 'homestead'),
+            'pass' => env('DB_PASSWORD', 'secret'),
+            'db'   => env('DB_DATABASE', 'revamp'),
+            'host' => env('DB_HOST', 'localhost'),
+        ];
+
+         return json_encode(
+            SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )
+        );
+    }
 }
 
 class SSP {
