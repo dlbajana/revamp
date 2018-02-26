@@ -112,7 +112,7 @@
                     <span class="text text-bold">REGION: </span>
                 </td>
                 <td width="40%" style="border: 1px solid black; border-right: 0px; border-left: 0px; border-top: 0px font-weight: bold; padding: 5px;">
-                    <span class="text">{{ $provider->addressRegion->region }}</span>
+                    <span class="text">{{ optional($provider->addressRegion)->region }}</span>
                 </td>
                 <td width="20%" align="right">
                     <span class="text text-bold">PROVIDER TYPE: </span>
