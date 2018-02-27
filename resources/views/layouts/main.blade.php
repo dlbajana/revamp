@@ -263,6 +263,21 @@
                                 <span class="menu_title">Physicians</span>
                             </a>
                         </li>
+                        <li class="@yield('nav_cpt')" title="CPT">
+                            <a href="#">
+                                <span class="menu_title">CPT</span>
+                            </a>
+                        </li>
+                        <li class="@yield('nav_icd')" title="ICD">
+                            <a href="{{ route('icd.index') }}">
+                                <span class="menu_title">ICD</span>
+                            </a>
+                        </li>
+                        <li class="@yield('nav_rvu')" title="RVU">
+                            <a href="{{ route('rvu.index') }}">
+                                <span class="menu_title">RVU</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
