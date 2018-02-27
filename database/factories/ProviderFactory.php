@@ -9,6 +9,7 @@ $factory->define(App\Provider::class, function (Faker $faker) {
         'name' => $name,
         'licensed_name' => $name,
         'business_type' => $faker->randomElement(['hospital', 'clinic']),
+        'tin' => $faker->numerify('############'),
         'phic_accreditation_from' => $faker->dateTimeThisDecade($max = 'now', $timezone = null),
         'phic_accreditation_to' => $faker->dateTimeThisDecade($max = 'now', $timezone = null),
         'accreditation_status' => $faker->randomElement(['accredited', 'disaccredited', 'non-accredited']),

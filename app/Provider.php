@@ -141,7 +141,12 @@ class Provider extends Model
             'business_type' => $request->business_type,
             'business_hours' => $request->business_hours,
             'number_of_beds' => $request->number_of_beds,
-            'tin' => $request->tin,
+
+            // If tin_from_existing_provider from request has a value, we will
+            //fetch the provider and use it's TIN to this provider. Otherwise,
+            //we encode the User provided TIN from request.
+            'tin' => $request->tin_from_existing_provider ? Provider::find($request->tin_from_existing_provider)->tin : $request->tin,
+            'tin_from_existing_provider' => $request->tin_from_existing_provider,
             'tax_exempt' => $request->tax_exempt ?: 0,
             'withheld' => $request->withheld ?: 0,
             'accreditation_status' => $request->accreditation_status,
@@ -276,7 +281,12 @@ class Provider extends Model
             'business_type' => $request->business_type,
             'business_hours' => $request->business_hours,
             'number_of_beds' => $request->number_of_beds,
-            'tin' => $request->tin,
+
+            // If tin_from_existing_provider from request has a value, we will
+            //fetch the provider and use it's TIN to this provider. Otherwise,
+            //we encode the User provided TIN from request.
+            'tin' => $request->tin_from_existing_provider ? Provider::find($request->tin_from_existing_provider)->tin : $request->tin,
+            'tin_from_existing_provider' => $request->tin_from_existing_provider,
             'tax_exempt' => $request->tax_exempt ?: 0,
             'withheld' => $request->withheld ?: 0,
             'accreditation_status' => $request->accreditation_status,

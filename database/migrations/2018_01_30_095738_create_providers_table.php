@@ -22,6 +22,7 @@ class CreateProvidersTable extends Migration
             $table->string('business_hours')->nullable();
             $table->integer('number_of_beds')->nullable();
             $table->string('tin')->nullable();
+            $table->integer('tin_from_existing_provider')->nullable();
             $table->tinyInteger('tax_exempt')->default(0);
             $table->tinyInteger('withheld')->default(0);
             $table->string('accreditation_status');

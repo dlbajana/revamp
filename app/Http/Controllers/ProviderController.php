@@ -27,17 +27,28 @@ class ProviderController extends Controller
 
     public function create()
     {
-        return view('providers.create');
+        $providers = Provider::select('id', 'name', 'tin')->get();
+        return view('providers.create', compact('providers'));
     }
 
     public function store(Request $request)
     {
-        $validatedProvider = $request->validate([
-            'id' => 'nullable|unique:providers',
-            'name' => 'required|max:255',
-            'business_type' => 'required',
-            'accreditation_status' => 'required',
-        ]);
+        if ($request->tin_from_existing_provider) {
+            $validatedProvider = $request->validate([
+                'id' => 'nullable|unique:providers',
+                'name' => 'required|max:255',
+                'business_type' => 'required',
+                'accreditation_status' => 'required',
+            ]);
+        } else {
+            $validatedProvider = $request->validate([
+                'id' => 'nullable|unique:providers',
+                'name' => 'required|max:255',
+                'business_type' => 'required',
+                'accreditation_status' => 'required',
+                'tin' => 'required|unique:providers',
+            ]);
+        }
 
         Provider::createFromRequest($request);
 
@@ -57,20 +68,31 @@ class ProviderController extends Controller
 
     public function edit(Provider $provider)
     {
+        $providers = Provider::select('id', 'name', 'tin')->get();
         $physicians = Physician::whereNotIn('id', $provider->physicians->pluck('id'))
                         ->get();
 
-        return view('providers.edit', compact('provider', 'physicians'));
+        return view('providers.edit', compact('provider', 'physicians', 'providers'));
     }
 
     public function update(Request $request, Provider $provider)
     {
-        $validatedProvider = $request->validate([
-            'id' => 'nullable|unique:providers',
-            'name' => 'required|max:255',
-            'business_type' => 'required',
-            'accreditation_status' => 'required',
-        ]);
+        if ($request->tin_from_existing_provider) {
+            $validatedProvider = $request->validate([
+                'id' => 'nullable|unique:providers',
+                'name' => 'required|max:255',
+                'business_type' => 'required',
+                'accreditation_status' => 'required',
+            ]);
+        } else {
+            $validatedProvider = $request->validate([
+                'id' => 'nullable|unique:providers',
+                'name' => 'required|max:255',
+                'business_type' => 'required',
+                'accreditation_status' => 'required',
+                'tin' => 'required|unique:providers',
+            ]);
+        }
 
         if ($physicians = $request->physician) {
             foreach ($physicians as $key => $physicianId) {
@@ -141,7 +163,7 @@ class ProviderController extends Controller
         $provider->load('providerContactPersons');
         $pdf = \PDF::loadView('providers.provider-enrollment-form', compact('provider'))
                     ->setPaper('legal', 'portrait');
-                    
+
         return $pdf->stream('provider-enrollment-form.pdf');
     }
 }

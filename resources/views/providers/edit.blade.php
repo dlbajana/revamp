@@ -107,14 +107,37 @@
                                 </div>
                             </div>
                             <div class="uk-grid">
-                                <div class="uk-width-medium-2-4">
-                                    <label>Tax Identification Number</label>
-                                    <input type="text" name="tin" value="{{ old('tin') ?: $provider->tin }}" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}" />
-                                    @if ($errors->has('tin'))
-                                        <span class="uk-form-help-block uk-text-danger">{{ $errors->first('tin') }}</span>
-                                    @endif
+                                <div class="uk-width-1-2">
+                                    <select id="select-tin-from-existing-provider" name="tin_from_existing_provider" data-uk-tooltip="{pos:'top'}" title="Region">
+                                        <option value="">&nbsp;</option>
+                                        @foreach ($providers as $key => $referenceProvider)
+                                            @if ($errors->any())
+                                                <option value="{{ $referenceProvider->id }}" @if(old('tin_from_existing_provider') == $referenceProvider->id) selected @endif>
+                                                    {{ $referenceProvider->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $referenceProvider->id }}" @if($referenceProvider->id == $provider->tin_from_existing_provider) selected @endif>
+                                                    {{ $referenceProvider->name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <span class="uk-form-help-block">Use TIN from Existing Provider</span>
                                 </div>
-                                <div class="uk-width-medium-1-4">
+                                <div class="uk-width-1-2">
+                                    <label>Tax Identification Number</label>
+                                    @if ($errors->any())
+                                        <input id="input-tin" type="text" name="tin" value="{{ old('tin') }}" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}"
+                                            @if(old('tin_from_existing_provider')) disabled @endif/>
+                                    @else
+                                        <input id="input-tin" type="text" name="tin" value="@if(! $provider->tin_from_existing_provider){{ $provider->tin }}@endif" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}"
+                                            @if($provider->tin_from_existing_provider) disabled @endif/>
+                                    @endif
+                                    @if ($errors->has('tin'))<span class="uk-form-help-block uk-text-danger">{{ $errors->first('tin') }}</span>@endif
+                                </div>
+                            </div>
+                            <div class="uk-grid">
+                                <div class="uk-width-medium-1-2">
                                     <p class="uk-margin-small-top">
                                         @if ($errors->any())
                                             <input type="checkbox" name="tax_exempt" value="1" id="check_tax_exempt" data-md-icheck @if (old('tax_exempt')) checked @endif/>
@@ -124,7 +147,7 @@
                                         <label for="check_tax_exempt" class="inline-label">Tax Exempt</label>
                                     </p>
                                 </div>
-                                <div class="uk-width-medium-1-4">
+                                <div class="uk-width-medium-1-2">
                                     <p class="uk-margin-small-top">
                                         @if ($errors->any())
                                             <input type="checkbox" name="withheld" value="1" id="check_withheld" data-md-icheck @if (old('withheld')) checked @endif/>
@@ -163,7 +186,7 @@
                                         @else
                                             <input type="checkbox" name="default_corporate_no_access" value="1" id="check_default_corporate_no_access" data-md-icheck @if($provider->default_corporate_no_access) checked @endif/>
                                         @endif
-                                        <label for="check_default_corporate_no_access" class="inline-label">Top Hospital <i class="material-icons" title="All Corporate Accounts will have no access to this provider by default unless explicitly specified.">&#xE887;</i></label>
+                                        <label for="check_default_corporate_no_access" class="inline-label">Default Corporate No-Access <i class="material-icons" title="All Corporate Accounts will have no access to this provider by default unless explicitly specified.">&#xE887;</i></label>
                                     </p>
                                     <p>
                                         @if ($errors->any())
@@ -1317,6 +1340,23 @@
             init: function() {
                 amaphil.select_address();
                 amaphil.affiliation_fields();
+                amaphil.select_with_same_tin();
+            },
+            select_with_same_tin: function() {
+                var $select_with_same_tin;
+                var tin = $('#input-tin');
+
+                $select_with_same_tin = $('#select-tin-from-existing-provider').selectize({
+                    allowEmptyOption: true,
+                    onChange: function(value) {
+                        if (!value.length) {
+                            tin.attr('disabled', false);
+                        } else {
+                            tin.val('');
+                            tin.attr('disabled', true);
+                        }
+                    }
+                });
             },
             select_address: function() {
                 var xhr;
