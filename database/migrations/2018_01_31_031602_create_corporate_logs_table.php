@@ -16,10 +16,10 @@ class CreateCorporateLogsTable extends Migration
         Schema::create('corporate_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('corporate_id');
-            $table->string('type');
-            $table->text('reason')->nullable();
-            $table->text('remarks')->nullable();
-            $table->integer('created_by');
+            $table->string('title');
+            $table->string('message', 4000)->nullable();
+            $table->string('remarks', 4000)->nullable();
+            $table->integer('created_by')->nullable();
             $table->timestamps();
         });
     }
