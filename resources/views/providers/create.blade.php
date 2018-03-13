@@ -341,6 +341,17 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1">
+                                    <label for="masked_late_payment_interest">Late Payment Interest</label>
+                                    <input class="md-input masked_input {{ $errors->has('late_payment_interest') ? ' md-input-danger' : '' }}"
+                                        name="late_payment_interest" value="{{ old('late_payment_interest') }}" id="masked_late_payment_interest" type="text"
+                                        data-inputmask="'alias': 'currency', 'prefix': '', 'suffix': ' %' " data-inputmask-showmaskonhover="false" />
+                                    @if ($errors->has('late_payment_interest'))
+                                        <span class="uk-form-help-block uk-text-danger">{{ $errors->first('late_payment_interest') }}</span>
+                                    @endif
+                                </div>
+                            </div>
                             <h3 class="heading_c uk-margin-large-top uk-text-success uk-text-italic">Prompt Payment</h3>
                             <div class="uk-grid">
                                 <div class="uk-width-1-1">
@@ -371,17 +382,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="uk-grid">
-                                <div class="uk-width-1-2">
-                                    <label for="masked_late_payment_interest">Late Payment Interest</label>
-                                    <input class="md-input masked_input {{ $errors->has('late_payment_interest') ? ' md-input-danger' : '' }}"
-                                        name="late_payment_interest" value="{{ old('late_payment_interest') }}" id="masked_late_payment_interest" type="text"
-                                        data-inputmask="'alias': 'currency', 'prefix': '', 'suffix': ' %' " data-inputmask-showmaskonhover="false" />
-                                    @if ($errors->has('late_payment_interest'))
-                                        <span class="uk-form-help-block uk-text-danger">{{ $errors->first('late_payment_interest') }}</span>
-                                    @endif
-                                </div>
-                            </div>
 
                             <h3 class="heading_c uk-margin-large-top uk-text-success uk-text-italic">Provider Setup</h3>
                             <div class="uk-grid">
@@ -393,7 +393,7 @@
                                             <input id="check_ip_opd_or_whole" type="checkbox" name="ip_opd_or_whole" value="1" @if(old('ip_opd_or_whole') == 1) checked @endif data-md-icheck/>
                                             <label for="check_ip_opd_or_whole" class="inline-label">Whole</label>
                                         </span>
-                                        <select id="select_ip_opd_or_whole_through" data-md-selectize name="ip_opd_or_whole_through" class= "{{ $errors->has('ip_opd_or_whole_through') ? ' md-input-danger' : '' }}">
+                                        <select id="select_ip_opd_or_whole_through" data-md-selectize name="ip_opd_or_whole_through" @if(is_null(old('ip_opd_or_whole_through'))) disabled @endif>
                                             <option value="">Through...</option>
                                             <option value="bank deposit" @if(old('ip_opd_or_whole_through') == 'bank deposit') selected @endif>Bank Deposit</option>
                                             <option value="check pick-up" @if(old('ip_opd_or_whole_through') == 'check pick-up') selected @endif>Check Pick-up</option>
@@ -407,7 +407,7 @@
                                             <input id="check_ip_opd_or_split_hb_hospital" type="checkbox" name="ip_opd_or_split_hb_hospital" value="1" @if(old('ip_opd_or_split_hb_hospital') == 1) checked @endif data-md-icheck/>
                                             <label for="check_ip_opd_or_split_hb_hospital" class="inline-label">Split - HB to Hospital</label>
                                         </span>
-                                        <select data-md-selectize name="ip_opd_or_split_hb_hospital_through" class="{{ $errors->has('ip_opd_or_split_hb_hospital_through') ? ' md-input-danger' : '' }}">
+                                        <select id="select_ip_opd_or_split_hb_hospital_through" data-md-selectize name="ip_opd_or_split_hb_hospital_through" @if(is_null(old('ip_opd_or_split_hb_hospital_through'))) disabled @endif>
                                             <option value="">Through...</option>
                                             <option value="bank deposit" @if(old('ip_opd_or_split_hb_hospital_through') == 'bank deposit') selected @endif>Bank Deposit</option>
                                             <option value="check pick-up" @if(old('ip_opd_or_split_hb_hospital_through') == 'check pick-up') selected @endif>Check Pick-up</option>
@@ -421,7 +421,7 @@
                                             <input id="check_ip_opd_or_split_pf_doctor" type="checkbox" name="ip_opd_or_split_pf_doctor" value="1" @if(old('ip_opd_or_split_pf_doctor') == 1) checked @endif data-md-icheck/>
                                             <label for="check_ip_opd_or_split_pf_doctor" class="inline-label">Split - PF to Doctor</label>
                                         </span>
-                                        <select data-md-selectize name="ip_opd_or_split_pf_doctor_through" class="{{ $errors->has('ip_opd_or_split_pf_doctor_through') ? ' md-input-danger' : '' }}">
+                                        <select id="select_ipd_opd_or_split_pf_doctor_through" data-md-selectize name="ip_opd_or_split_pf_doctor_through" @if(is_null(old('ip_opd_or_split_pf_doctor_through'))) disabled @endif>
                                             <option value="">Through...</option>
                                             <option value="bank deposit" @if(old('ip_opd_or_split_pf_doctor_through') == 'bank deposit') selected @endif>Bank Deposit</option>
                                             <option value="check pick-up" @if(old('ip_opd_or_split_pf_doctor_through') == 'check pick-up') selected @endif>Check Pick-up</option>
@@ -457,7 +457,7 @@
                                             <input id="check_op_consult_referral_paid_to_hospital" type="checkbox" name="op_consult_referral_paid_to_hospital" value="1" @if(old('op_consult_referral_paid_to_hospital') == 1) checked @endif data-md-icheck/>
                                             <label for="check_op_consult_referral_paid_to_hospital" class="inline-label">Paid to Hospital</label>
                                         </span>
-                                        <select data-md-selectize name="op_consult_referral_paid_to_hospital_through" class="{{ $errors->has('op_consult_referral_paid_to_hospital_through') ? ' md-input-danger' : '' }}">
+                                        <select id="select_op_consult_referral_paid_to_hospital_through" data-md-selectize name="op_consult_referral_paid_to_hospital_through" @if(is_null(old('op_consult_referral_paid_to_hospital_through'))) disabled @endif>
                                             <option value="">Through...</option>
                                             <option value="bank deposit" @if(old('op_consult_referral_paid_to_hospital_through') == 'bank deposit') selected @endif>Bank Deposit</option>
                                             <option value="check pick-up" @if(old('op_consult_referral_paid_to_hospital_through') == 'check pick-up') selected @endif>Check Pick-up</option>
@@ -471,7 +471,7 @@
                                             <input id="check_op_consult_referral_paid_to_doctor" type="checkbox" name="op_consult_referral_paid_to_doctor" value="1" @if(old('op_consult_referral_paid_to_doctor') == 1) checked @endif data-md-icheck/>
                                             <label for="check_op_consult_referral_paid_to_doctor" class="inline-label">Paid to Doctor</label>
                                         </span>
-                                        <select data-md-selectize name="op_consult_referral_paid_to_doctor_through" class="{{ $errors->has('op_consult_referral_paid_to_doctor_through') ? ' md-input-danger' : '' }}">
+                                        <select id="select_op_consult_referral_paid_to_doctor_through" data-md-selectize name="op_consult_referral_paid_to_doctor_through" @if(is_null(old('op_consult_referral_paid_to_doctor_through'))) disabled @endif>
                                             <option value="">Through...</option>
                                             <option value="bank deposit" @if(old('op_consult_referral_paid_to_doctor_through') == 'bank deposit') selected @endif>Bank Deposit</option>
                                             <option value="check pick-up" @if(old('op_consult_referral_paid_to_doctor_through') == 'check pick-up') selected @endif>Check Pick-up</option>
@@ -507,7 +507,7 @@
                                             <input id="check_clinic_setting_paid_to_hospital" type="checkbox" name="clinic_setting_paid_to_hospital" value="1" @if(old('clinic_setting_paid_to_hospital') == 1) checked @endif data-md-icheck/>
                                             <label for="check_clinic_setting_paid_to_hospital" class="inline-label">Paid to Hospital</label>
                                         </span>
-                                        <select data-md-selectize name="clinic_setting_paid_to_hospital_through" class="{{ $errors->has('clinic_setting_paid_to_hospital_through') ? ' md-input-danger' : '' }}">
+                                        <select id="select_clinic_setting_paid_to_hospital_through" data-md-selectize name="clinic_setting_paid_to_hospital_through" @if(is_null(old('clinic_setting_paid_to_hospital_through'))) disabled @endif>
                                             <option value="">Through...</option>
                                             <option value="bank deposit" @if(old('clinic_setting_paid_to_hospital_through') == 'bank deposit') selected @endif>Bank Deposit</option>
                                             <option value="check pick-up" @if(old('clinic_setting_paid_to_hospital_through') == 'check pick-up') selected @endif>Check Pick-up</option>
@@ -521,7 +521,7 @@
                                             <input id="check_clinic_setting_paid_to_doctor" type="checkbox" name="clinic_setting_paid_to_doctor" value="1" @if(old('clinic_setting_paid_to_doctor') == 1) checked @endif data-md-icheck/>
                                             <label for="check_clinic_setting_paid_to_doctor" class="inline-label">Paid to Doctor</label>
                                         </span>
-                                        <select data-md-selectize name="clinic_setting_paid_to_doctor_through" class="{{ $errors->has('clinic_setting_paid_to_doctor_through') ? ' md-input-danger' : '' }}">
+                                        <select id="select_clinic_setting_paid_to_doctor_through" data-md-selectize name="clinic_setting_paid_to_doctor_through" @if(is_null(old('clinic_setting_paid_to_doctor_through'))) disabled @endif>
                                             <option value="">Through...</option>
                                             <option value="bank deposit" @if(old('clinic_setting_paid_to_doctor_through') == 'bank deposit') selected @endif>Bank Deposit</option>
                                             <option value="check pick-up" @if(old('clinic_setting_paid_to_doctor_through') == 'check pick-up') selected @endif>Check Pick-up</option>
@@ -921,137 +921,30 @@
     <script>
         $(function () {
             amaphil.init();
-
             $('.dropify').dropify();
-
-            var ip_opd_or_whole = $('#check_ip_opd_or_whole');
-            var ip_opd_or_split_hb_hospital = $('#check_ip_opd_or_split_hb_hospital');
-            var ip_opd_or_split_pf_doctor = $('#check_ip_opd_or_split_pf_doctor');
-
-            ip_opd_or_whole.on('ifChecked', function (event) {
-                ip_opd_or_split_hb_hospital.iCheck('uncheck');
-                ip_opd_or_split_pf_doctor.iCheck('uncheck');
-            });
-
-            ip_opd_or_split_hb_hospital.on('ifChecked', function (event) {
-                ip_opd_or_whole.iCheck('uncheck');
-                ip_opd_or_split_pf_doctor.iCheck('check');
-            }).on('ifUnchecked', function (event) {
-                ip_opd_or_split_pf_doctor.iCheck('uncheck');
-            });
-
-            ip_opd_or_split_pf_doctor.on('ifChecked', function (event) {
-                ip_opd_or_whole.iCheck('uncheck');
-                ip_opd_or_split_hb_hospital.iCheck('check');
-            }).on('ifUnchecked', function (event) {
-                ip_opd_or_split_hb_hospital.iCheck('uncheck');
-            });
-
-            var op_consult_referral_paid_to_hospital = $('#check_op_consult_referral_paid_to_hospital');
-            var op_consult_referral_paid_to_doctor = $('#check_op_consult_referral_paid_to_doctor');
-
-            op_consult_referral_paid_to_hospital.on('ifChecked', function (event) {
-                op_consult_referral_paid_to_doctor.iCheck('uncheck');
-            });
-
-            op_consult_referral_paid_to_doctor.on('ifChecked', function (event) {
-                op_consult_referral_paid_to_hospital.iCheck('uncheck');
-            });
-
-            var clinic_setting_paid_to_hospital = $('#check_clinic_setting_paid_to_hospital');
-            var clinic_setting_paid_to_doctor = $('#check_clinic_setting_paid_to_doctor');
-
-            clinic_setting_paid_to_hospital.on('ifChecked', function (event) {
-                clinic_setting_paid_to_doctor.iCheck('uncheck');
-            });
-
-            clinic_setting_paid_to_doctor.on('ifChecked', function (event) {
-                clinic_setting_paid_to_hospital.iCheck('uncheck');
-            });
-
-            var prompt_payment_discount = $('#check_prompt_payment_discount');
-            var masked_prompt_payment_discount_rate = $('#masked_prompt_payment_discount_rate');
-            var prompt_payment_discount_terms_outright = $('#radio_prompt_payment_discount_terms_outright');
-            var prompt_payment_discount_terms_rebate = $('#radio_prompt_payment_discount_terms_rebate');
-
-            prompt_payment_discount.on('ifChecked', function (event) {
-                masked_prompt_payment_discount_rate.prop('disabled', false);
-                prompt_payment_discount_terms_outright.iCheck('enable');
-                prompt_payment_discount_terms_rebate.iCheck('enable');
-            });
-
-            prompt_payment_discount.on('ifUnchecked', function (event) {
-                masked_prompt_payment_discount_rate.prop('disabled', true);
-                masked_prompt_payment_discount_rate.val(0);
-                prompt_payment_discount_terms_outright.iCheck('disable');
-                prompt_payment_discount_terms_rebate.iCheck('disable');
-            });
-
-
-
-            var $dp_phic_accreditation_from = $('#dp_phic_accreditation_from'),
-                $dp_phic_accreditation_to = $('#dp_phic_accreditation_to');
-
-            var start_date = UIkit.datepicker($dp_phic_accreditation_from, {
-                format:'YYYY-MM-DD'
-            });
-
-            var end_date = UIkit.datepicker($dp_phic_accreditation_to, {
-                format:'YYYY-MM-DD'
-            });
-
-            $dp_phic_accreditation_from.on('change',function() {
-                end_date.options.minDate = $dp_phic_accreditation_from.val();
-                setTimeout(function() {
-                    $dp_phic_accreditation_to.focus();
-                },300);
-            });
-
-            $dp_phic_accreditation_to.on('change',function() {
-                start_date.options.maxDate = $dp_phic_accreditation_to.val();
-            });
-
-            var $dp_orientation_date = $('#dp_orientation_date');
-
-            UIkit.datepicker($dp_orientation_date, { format:'YYYY-MM-DD' });
-
-            $maskedInput = $('.masked_input').inputmask();
-            if($maskedInput.length) {
-                $maskedInput.inputmask();
-            }
-
-            var $dp_accreditation_date = $('#dp_accreditation_date'),
-                $dp_disaccreditation_date = $('#dp_disaccreditation_date');
-
-            var start_date = UIkit.datepicker($dp_accreditation_date, {
-                format:'YYYY-MM-DD'
-            });
-
-            var end_date = UIkit.datepicker($dp_disaccreditation_date, {
-                format:'YYYY-MM-DD'
-            });
-
-            $dp_accreditation_date.on('change',function() {
-                end_date.options.minDate = $dp_accreditation_date.val();
-                setTimeout(function() {
-                    $dp_disaccreditation_date.focus();
-                },300);
-            });
-
-            $dp_disaccreditation_date.on('change',function() {
-                start_date.options.maxDate = $dp_disaccreditation_date.val();
-            });
-
-            $maskedInput = $('.masked_input').inputmask();
-            if($maskedInput.length) {
-                $maskedInput.inputmask();
-            }
         });
 
         amaphil = {
             init: function() {
                 amaphil.select_address();
+                amaphil.provider_setup_ip_opd_or();
+                amaphil.provider_setup_op_consult_referral();
+                amaphil.provider_setup_clinic_setting();
+                amaphil.date_range_phic_accreditation();
+                amaphil.date_range_provider_accreditation();
+                amaphil.date_picker_orientation();
+                amaphil.prompt_payment_discount();
+                amaphil.professional_fees();
+                amaphil.masked_input();
             },
+
+            masked_input: function() {
+                $maskedInput = $('.masked_input').inputmask();
+                if ($maskedInput.length) {
+                    $maskedInput.inputmask();
+                }
+            },
+
             select_address: function() {
                 var xhr;
                 var select_address_region, $select_address_region;
@@ -1154,7 +1047,205 @@
                     searchField: ['baranggay'],
                 });
                 select_address_baranggay = $select_address_baranggay[0].selectize;
-            }
+            },
+
+            provider_setup_ip_opd_or: function() {
+                var ip_opd_or_whole = $('#check_ip_opd_or_whole');
+                var ip_opd_or_split_hb_hospital = $('#check_ip_opd_or_split_hb_hospital');
+                var ip_opd_or_split_pf_doctor = $('#check_ip_opd_or_split_pf_doctor');
+
+                var select_ip_opd_or_whole_through, $select_ip_opd_or_whole_through;
+                $select_ip_opd_or_whole_through = $('#select_ip_opd_or_whole_through');
+                select_ip_opd_or_whole_through = $select_ip_opd_or_whole_through[0].selectize;
+
+                var select_ip_opd_or_split_hb_hospital_through, $select_ip_opd_or_split_hb_hospital_through;
+                $select_ip_opd_or_split_hb_hospital_through = $('#select_ip_opd_or_split_hb_hospital_through');
+                select_ip_opd_or_split_hb_hospital_through = $select_ip_opd_or_split_hb_hospital_through[0].selectize;
+
+                var select_ipd_opd_or_split_pf_doctor_through, $select_ipd_opd_or_split_pf_doctor_through;
+                $select_ipd_opd_or_split_pf_doctor_through = $('#select_ipd_opd_or_split_pf_doctor_through');
+                select_ipd_opd_or_split_pf_doctor_through = $select_ipd_opd_or_split_pf_doctor_through[0].selectize;
+
+                ip_opd_or_whole.on('ifChecked', function (event) {
+                    ip_opd_or_split_hb_hospital.iCheck('uncheck');
+                    ip_opd_or_split_pf_doctor.iCheck('uncheck');
+                    select_ip_opd_or_whole_through.enable();
+                });
+
+                ip_opd_or_whole.on('ifUnchecked', function (event) {
+                    select_ip_opd_or_whole_through.disable();
+                    select_ip_opd_or_whole_through.clear();
+                });
+
+                ip_opd_or_split_hb_hospital.on('ifChecked', function (event) {
+                    ip_opd_or_whole.iCheck('uncheck');
+                    ip_opd_or_split_pf_doctor.iCheck('check');
+                    select_ip_opd_or_split_hb_hospital_through.enable();
+                });
+
+                ip_opd_or_split_hb_hospital.on('ifUnchecked', function (event) {
+                    ip_opd_or_split_pf_doctor.iCheck('uncheck');
+                    select_ip_opd_or_split_hb_hospital_through.disable();
+                    select_ip_opd_or_split_hb_hospital_through.clear();
+                });
+
+                ip_opd_or_split_pf_doctor.on('ifChecked', function (event) {
+                    ip_opd_or_whole.iCheck('uncheck');
+                    ip_opd_or_split_hb_hospital.iCheck('check');
+                    select_ipd_opd_or_split_pf_doctor_through.enable();
+                });
+
+                ip_opd_or_split_pf_doctor.on('ifUnchecked', function (event) {
+                    ip_opd_or_split_hb_hospital.iCheck('uncheck');
+                    select_ipd_opd_or_split_pf_doctor_through.disable();
+                    select_ipd_opd_or_split_pf_doctor_through.clear();
+                });
+            },
+
+            provider_setup_op_consult_referral: function() {
+                var op_consult_referral_paid_to_hospital = $('#check_op_consult_referral_paid_to_hospital');
+                var op_consult_referral_paid_to_doctor = $('#check_op_consult_referral_paid_to_doctor');
+
+                var select_op_consult_referral_paid_to_hospital_through, $select_op_consult_referral_paid_to_hospital_through;
+                $select_op_consult_referral_paid_to_hospital_through = $('#select_op_consult_referral_paid_to_hospital_through');
+                select_op_consult_referral_paid_to_hospital_through = $select_op_consult_referral_paid_to_hospital_through[0].selectize;
+
+                var select_op_consult_referral_paid_to_doctor_through, $select_op_consult_referral_paid_to_doctor_through;
+                $select_op_consult_referral_paid_to_doctor_through = $('#select_op_consult_referral_paid_to_doctor_through');
+                select_op_consult_referral_paid_to_doctor_through = $select_op_consult_referral_paid_to_doctor_through[0].selectize;
+
+
+                op_consult_referral_paid_to_hospital.on('ifChecked', function (event) {
+                    op_consult_referral_paid_to_doctor.iCheck('uncheck');
+                    select_op_consult_referral_paid_to_hospital_through.enable();
+                });
+
+                op_consult_referral_paid_to_hospital.on('ifUnchecked', function (event) {
+                    select_op_consult_referral_paid_to_hospital_through.disable();
+                    select_op_consult_referral_paid_to_hospital_through.clear();
+                });
+
+                op_consult_referral_paid_to_doctor.on('ifChecked', function (event) {
+                    op_consult_referral_paid_to_hospital.iCheck('uncheck');
+                    select_op_consult_referral_paid_to_doctor_through.enable();
+                });
+
+                op_consult_referral_paid_to_doctor.on('ifUnchecked', function (event) {
+                    select_op_consult_referral_paid_to_doctor_through.disable();
+                    select_op_consult_referral_paid_to_doctor_through.clear();
+                });
+            },
+
+            provider_setup_clinic_setting: function() {
+                var clinic_setting_paid_to_hospital = $('#check_clinic_setting_paid_to_hospital');
+                var clinic_setting_paid_to_doctor = $('#check_clinic_setting_paid_to_doctor');
+
+                var select_clinic_setting_paid_to_hospital_through, $select_clinic_setting_paid_to_hospital_through;
+                $select_clinic_setting_paid_to_hospital_through = $('#select_clinic_setting_paid_to_hospital_through');
+                select_clinic_setting_paid_to_hospital_through = $select_clinic_setting_paid_to_hospital_through[0].selectize;
+
+                var select_clinic_setting_paid_to_doctor_through, $select_clinic_setting_paid_to_doctor_through;
+                $select_clinic_setting_paid_to_doctor_through = $('#select_clinic_setting_paid_to_doctor_through');
+                select_clinic_setting_paid_to_doctor_through = $select_clinic_setting_paid_to_doctor_through[0].selectize;
+
+                clinic_setting_paid_to_hospital.on('ifChecked', function (event) {
+                    clinic_setting_paid_to_doctor.iCheck('uncheck');
+                    select_clinic_setting_paid_to_hospital_through.enable();
+                });
+
+                clinic_setting_paid_to_hospital.on('ifUnchecked', function (event) {
+                    select_clinic_setting_paid_to_hospital_through.disable();
+                    select_clinic_setting_paid_to_hospital_through.clear();
+                });
+
+                clinic_setting_paid_to_doctor.on('ifChecked', function (event) {
+                    clinic_setting_paid_to_hospital.iCheck('uncheck');
+                    select_clinic_setting_paid_to_doctor_through.enable();
+                });
+
+                clinic_setting_paid_to_doctor.on('ifUnchecked', function (event) {
+                    select_clinic_setting_paid_to_doctor_through.disable();
+                    select_clinic_setting_paid_to_doctor_through.clear();
+                });
+            },
+
+            date_range_phic_accreditation: function() {
+                var $dp_phic_accreditation_from = $('#dp_phic_accreditation_from'),
+                    $dp_phic_accreditation_to = $('#dp_phic_accreditation_to');
+
+                var start_date = UIkit.datepicker($dp_phic_accreditation_from, {
+                    format:'YYYY-MM-DD'
+                });
+
+                var end_date = UIkit.datepicker($dp_phic_accreditation_to, {
+                    format:'YYYY-MM-DD'
+                });
+
+                $dp_phic_accreditation_from.on('change',function() {
+                    end_date.options.minDate = $dp_phic_accreditation_from.val();
+                    setTimeout(function() {
+                        $dp_phic_accreditation_to.focus();
+                    },300);
+                });
+
+                $dp_phic_accreditation_to.on('change',function() {
+                    start_date.options.maxDate = $dp_phic_accreditation_to.val();
+                });
+            },
+
+            date_range_provider_accreditation: function() {
+                var $dp_accreditation_date = $('#dp_accreditation_date'),
+                    $dp_disaccreditation_date = $('#dp_disaccreditation_date');
+
+                var start_date = UIkit.datepicker($dp_accreditation_date, {
+                    format:'YYYY-MM-DD'
+                });
+
+                var end_date = UIkit.datepicker($dp_disaccreditation_date, {
+                    format:'YYYY-MM-DD'
+                });
+
+                $dp_accreditation_date.on('change',function() {
+                    end_date.options.minDate = $dp_accreditation_date.val();
+                    setTimeout(function() {
+                        $dp_disaccreditation_date.focus();
+                    },300);
+                });
+
+                $dp_disaccreditation_date.on('change',function() {
+                    start_date.options.maxDate = $dp_disaccreditation_date.val();
+                });
+            },
+
+            date_picker_orientation: function() {
+                var $dp_orientation_date = $('#dp_orientation_date');
+
+                UIkit.datepicker($dp_orientation_date, { format:'YYYY-MM-DD' });
+            },
+
+            prompt_payment_discount: function() {
+                var prompt_payment_discount = $('#check_prompt_payment_discount');
+                var masked_prompt_payment_discount_rate = $('#masked_prompt_payment_discount_rate');
+                var prompt_payment_discount_terms_outright = $('#radio_prompt_payment_discount_terms_outright');
+                var prompt_payment_discount_terms_rebate = $('#radio_prompt_payment_discount_terms_rebate');
+
+                prompt_payment_discount.on('ifChecked', function (event) {
+                    masked_prompt_payment_discount_rate.prop('disabled', false);
+                    prompt_payment_discount_terms_outright.iCheck('enable');
+                    prompt_payment_discount_terms_rebate.iCheck('enable');
+                });
+
+                prompt_payment_discount.on('ifUnchecked', function (event) {
+                    masked_prompt_payment_discount_rate.prop('disabled', true);
+                    masked_prompt_payment_discount_rate.val(0);
+                    prompt_payment_discount_terms_outright.iCheck('disable');
+                    prompt_payment_discount_terms_rebate.iCheck('disable');
+                });
+            },
+
+            professional_fees: function() {
+
+            },
         }
     </script>
 @endsection
