@@ -24,7 +24,7 @@ class Physician extends Model
     ];
 
     protected $casts = [
-        'suspected_fraud',
+        'suspected_fraud' => 'boolean',
     ];
 
     public function createdBy()

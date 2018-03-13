@@ -42,3 +42,13 @@ Route::resource('icd', 'ICDController', ['only' => ['index']]);
 |--------------------------------------------------------------------------
 */
 Route::resource('rvu', 'RVUController', ['only' => ['index']]);
+
+/*
+|--------------------------------------------------------------------------
+| CORPORATE
+|--------------------------------------------------------------------------
+*/
+Route::post('corporates/{corporate}/add_fund', 'CorporateController@addFund')->name('corporates.add-fund');
+Route::post('corporates/{corporate}/action', 'CorporateController@action')->name('corporates.action');
+Route::get('corporates/{corporate}/print', 'CorporateController@printDocument')->name('corporates.print');
+Route::resource('corporates', 'CorporateController');

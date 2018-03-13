@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCorporateLogsTable extends Migration
+class CreateCorporateFundHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateCorporateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('corporate_logs', function (Blueprint $table) {
+        Schema::create('corporate_fund_histories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('corporate_id');
+            $table->decimal('debit', 11, 2)->nullable();
+            $table->decimal('credit', 11, 2)->nullable();
+            $table->decimal('running_balance', 11, 2);
             $table->string('title');
-            $table->string('message', 4000)->nullable();
-            $table->string('remarks', 4000)->nullable();
-            $table->integer('created_by')->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateCorporateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('corporate_logs');
+        Schema::dropIfExists('corporate_fund_histories');
     }
 }

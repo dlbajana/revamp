@@ -287,7 +287,7 @@
                         <span class="menu_title">Corporate</span>
                     </a>
                     <ul>
-                        <li class="@yield('nav_corporate_corporate_accounts')"><a href="#">Corporate Accounts</a></li>
+                        <li class="@yield('nav_corporate_corporate_accounts')"><a href="{{ route('corporates.index') }}">Corporate Accounts</a></li>
                         <li class="@yield('nav_corporate_members')"><a href="#">Members</a></li>
                         <li class="@yield('nav_corporate_plans')"><a href="#">Plans & Coverage</a></li>
                     </ul>
