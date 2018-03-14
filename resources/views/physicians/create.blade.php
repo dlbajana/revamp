@@ -60,7 +60,7 @@
                             </div>
                             <div class="uk-grid">
                                 <div class="uk-width-medium-3-10">
-                                    <label>First Name<span class="req">*</span></label>
+                                    <label>First Name <span class="uk-text-danger">*</span></label>
                                     <input type="text" name="first_name" value="{{ old('first_name') }}" required class="md-input {{ $errors->has('first_name') ? ' md-input-danger' : '' }}"/>
                                     @if ($errors->has('first_name'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('first_name') }}</span>
@@ -74,7 +74,7 @@
                                     @endif
                                 </div>
                                 <div class="uk-width-medium-3-10">
-                                    <label>Last Name<span class="req">*</span></label>
+                                    <label>Last Name <span class="uk-text-danger">*</span></label>
                                     <input type="text" name="last_name" value="{{ old('last_name') }}" required class="md-input {{ $errors->has('last_name') ? ' md-input-danger' : '' }}"/>
                                     @if ($errors->has('last_name'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('last_name') }}</span>
@@ -438,10 +438,12 @@
                         <div class="md-card-content">
                             <div class="uk-grid">
                                 <div class="uk-width-medium-1-1">
-                                    <label>Tax Identification Number <span>*</span> </label>
-                                    <input type="text" name="tin" value="{{ old('tin') }}" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}" />
+                                    <label>Tax Identification Number <span class="uk-text-danger">*</span></label>
+                                    <input type="text" name="tin" value="{{ old('tin') }}" class="md-input masked_input {{ $errors->has('tin') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false" />
                                     @if ($errors->has('tin'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('tin') }}</span>
+                                    @else
+                                        <span class="uk-form-help-block">For a 9-digit TIN, add '000' at the end</span>
                                     @endif
                                 </div>
                             </div>
@@ -455,7 +457,7 @@
                                 </div>
                                 <div class="uk-width-1-2">
                                     <label>PhilHealth Number</label>
-                                    <input type="text" name="philhealth_no" value="{{ old('philhealth_no') }}" class="md-input {{ $errors->has('philhealth_no') ? ' md-input-danger' : '' }}" />
+                                    <input type="text" name="philhealth_no" value="{{ old('philhealth_no') }}" class="md-input masked_input {{ $errors->has('philhealth_no') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '99-999999999-9'" data-inputmask-showmaskonhover="false" />
                                     @if ($errors->has('philhealth_no'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('philhealth_no') }}</span>
                                     @endif
@@ -500,9 +502,15 @@
 @endsection
 
 @section('scripts')
+    <script src="/bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js"></script>
     <script>
         $(function () {
             amaphil.init();
+
+            $maskedInput = $('.masked_input').inputmask();
+            if($maskedInput.length) {
+                $maskedInput.inputmask();
+            }
         });
 
         amaphil = {

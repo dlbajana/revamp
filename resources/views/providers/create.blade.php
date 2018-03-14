@@ -62,7 +62,7 @@
                             </div>
                             <div class="uk-grid">
                                 <div class="uk-width-medium-2-3 ">
-                                    <label>Name<span class="req">*</span></label>
+                                    <label>Name <span class="req uk-text-danger">*</span></label>
                                     <input type="text" name="name" value="{{ old('name') }}" required class="md-input {{ $errors->has('name') ? ' md-input-danger' : '' }}" />
                                     @if ($errors->has('name'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('name') }}</span>
@@ -85,7 +85,7 @@
                             <div class="uk-grid">
                                 <div class="uk-width-medium-1-3">
                                     <select data-md-selectize name="business_type" class="{{ $errors->has('business_type') ? ' md-input-danger' : '' }}"  data-md-selectize-bottom data-uk-tooltip="{pos:'top'}" title="Business Type">
-                                        <option value="">Business Type*...</option>
+                                        <option value="">Business Type <span class="req uk-text-danger">*</span></option>
                                         <option value="hospital" @if(old('business_type') == 'hospital') selected @endif>Hospital</option>
                                         <option value="clinic" @if(old('business_type') == 'clinic') selected @endif>Clinic</option>
                                     </select>
@@ -127,8 +127,8 @@
                                     <span class="uk-form-help-block">Use TIN from Existing Provider</span>
                                 </div>
                                 <div class="uk-width-1-2">
-                                    <label>Tax Identification Number</label>
-                                    <input id="input-tin" type="text" name="tin" value="{{ old('tin') }}" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}"  @if(old('tin_from_existing_provider')) disabled @endif/>
+                                    <label>Tax Identification Number <span class="req uk-text-danger">*</span></label>
+                                    <input id="input-tin" type="text" name="tin" value="{{ old('tin') }}" class="md-input masked_input {{ $errors->has('tin') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false" @if(old('tin_from_existing_provider')) disabled @endif/>
                                     @if ($errors->has('tin'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('tin') }}</span>
                                     @endif

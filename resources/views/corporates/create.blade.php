@@ -146,7 +146,7 @@
                             <div  class="uk-grid">
                                 <div class="uk-width-medium-1-1">
                                     <label>PhilHealth No <span class="req uk-text-danger">*</span></label>
-                                    <input type="text" name="philhealth_no" value="{{ old('philhealth_no') }}" required class="md-input {{ $errors->has('philhealth_no') ? ' md-input-danger' : '' }}"/>
+                                    <input type="text" name="philhealth_no" value="{{ old('philhealth_no') }}" class="md-input masked_input {{ $errors->has('philhealth_no') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '99-999999999-9'" data-inputmask-showmaskonhover="false" />
                                     @if ($errors->has('philhealth_no'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('philhealth_no') }}</span>
                                     @endif
@@ -232,7 +232,7 @@
                                 <div class="uk-width-2-3">
                                     <div class="uk-input-group">
                                         <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                                        <label for="uk_dp_1">Billing Due Date</label>
+                                        <label for="uk_dp_1">Billing Due Date <span class="req uk-text-danger">*</span></label>
                                         <input class="md-input" type="text" name="billing_due_date" value="{{ old('billing_due_date') }}" id="dp_billing_due_date" data-uk-datepicker="{format:'YYYY-MM-DD'}">
                                         @if ($errors->has('billing_due_date'))
                                             <span class="uk-form-help-block uk-text-danger">{{ $errors->first('billing_due_date') }}</span>
@@ -479,10 +479,12 @@
                         <div class="md-card-content">
                             <div class="uk-grid">
                                 <div class="uk-width-2-3">
-                                    <label>Tax Identification Number <span class="uk-text-danger">*</span> </label>
-                                    <input type="text" name="tin" value="{{ old('tin') }}" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}" />
+                                    <label>Tax Identification Number <span class="uk-text-danger">*</span></label>
+                                    <input type="text" name="tin" value="{{ old('tin') }}" class="md-input masked_input {{ $errors->has('tin') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false" />
                                     @if ($errors->has('tin'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('tin') }}</span>
+                                    @else
+                                        <span class="uk-form-help-block">For a 9-digit TIN, add '000' at the end</span>
                                     @endif
                                 </div>
                                 <div class="uk-width-1-3">
@@ -505,7 +507,8 @@
                             <div class="uk-grid">
                                 <div class="uk-width-1-1">
                                     <label>Representative's TIN</label>
-                                    <input type="text" name="representative_tin" value="{{ old('representative_tin') }}" class="md-input {{ $errors->has('representative_tin') ? ' md-input-danger' : '' }}" />
+                                    <input type="text" name="representative_tin" value="{{ old('representative_tin') }}" class="md-input masked_input" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false" />
+                                    <span class="uk-form-help-block">For a 9-digit TIN, add '000' at the end</span>
                                 </div>
                             </div>
                             <div class="uk-grid">

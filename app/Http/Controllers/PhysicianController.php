@@ -37,6 +37,9 @@ class PhysicianController extends Controller
 
     public function store(Request $request)
     {
+        // Format requests from masked input before the validation
+        $request['tin'] = str_replace(['-', ','], '', $request->tin);
+
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -74,6 +77,9 @@ class PhysicianController extends Controller
 
     public function update(Request $request, Physician $physician)
     {
+        // Format requests from masked input before the validation
+        $request['tin'] = str_replace(['-', ','], '', $request->tin);
+        
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',

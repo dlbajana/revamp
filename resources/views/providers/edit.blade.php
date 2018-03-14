@@ -127,10 +127,10 @@
                                 <div class="uk-width-1-2">
                                     <label>Tax Identification Number</label>
                                     @if ($errors->any())
-                                        <input id="input-tin" type="text" name="tin" value="{{ old('tin') }}" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}"
+                                        <input id="input-tin" type="text" name="tin" value="{{ old('tin') }}" class="md-input masked_input {{ $errors->has('tin') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false"
                                             @if(old('tin_from_existing_provider')) disabled @endif/>
                                     @else
-                                        <input id="input-tin" type="text" name="tin" value="@if(! $provider->tin_from_existing_provider){{ $provider->tin }}@endif" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}"
+                                        <input id="input-tin" type="text" name="tin" value="@if(! $provider->tin_from_existing_provider){{ $provider->tin }}@endif" class="md-input masked_input {{ $errors->has('tin') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false"
                                             @if($provider->tin_from_existing_provider) disabled @endif/>
                                     @endif
                                     @if ($errors->has('tin'))<span class="uk-form-help-block uk-text-danger">{{ $errors->first('tin') }}</span>@endif

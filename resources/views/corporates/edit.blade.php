@@ -153,7 +153,7 @@
                             <div class="uk-grid">
                                 <div class="uk-width-medium-2-3">
                                     <label>PhilHealth No <span class="req uk-text-danger">*</span></label>
-                                    <input type="text" name="philhealth_no" value="{{ old('philhealth_no') ?: $corporate->philhealth_no }}" required class="md-input {{ $errors->has('philhealth_no') ? ' md-input-danger' : '' }}"/>
+                                    <input type="text" name="philhealth_no" value="{{ old('philhealth_no') ?: $corporate->philhealth_no }}" class="md-input masked_input {{ $errors->has('philhealth_no') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '99-999999999-9'" data-inputmask-showmaskonhover="false" />
                                     @if ($errors->has('philhealth_no'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('philhealth_no') }}</span>
                                     @endif
@@ -185,7 +185,7 @@
                                 <div class="uk-width-2-3">
                                     <div class="uk-input-group">
                                         <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                                        <label for="uk_dp_1">Effective Date (from)</label>
+                                        <label for="uk_dp_1">Effective Date (from) <span class="req uk-text-danger">*</span></label>
                                         <input class="md-input" type="text" name="date_effectivity_from" value="{{ old('date_effectivity_from') ?: optional($corporate->date_effectivity_from)->format('Y-m-d') }}" id="dp_date_effectivity_from" data-uk-datepicker="{format:'YYYY-MM-DD'}">
                                     </div>
                                 </div>
@@ -247,7 +247,7 @@
                                 <div class="uk-width-2-3">
                                     <div class="uk-input-group">
                                         <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                                        <label for="uk_dp_1">Billing Due Date</label>
+                                        <label for="uk_dp_1">Billing Due Date <span class="req uk-text-danger">*</span></label>
                                         <input class="md-input" type="text" name="billing_due_date" value="{{ old('billing_due_date') ?: optional($corporate->billing_due_date)->format('Y-m-d') }}" id="dp_billing_due_date" data-uk-datepicker="{format:'YYYY-MM-DD'}">
                                     </div>
                                 </div>
@@ -461,15 +461,18 @@
                         <div class="md-card-content">
                             <div class="uk-grid">
                                 <div class="uk-width-2-3">
-                                    <label>Name</label>
+                                    <label>Name <span class="req uk-text-danger">*</span></label>
                                     <input type="text" name="contact_person_name" value="{{ old('contact_person_name') ?: $corporate->contact_person_name }}" class="md-input {{ $errors->has('contact_person_name') ? ' md-input-danger' : '' }}" />
                                     @if ($errors->has('contact_person_name'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('contact_person_name') }}</span>
                                     @endif
                                 </div>
                                 <div class="uk-width-1-3">
-                                    <label>Designation</label>
+                                    <label>Designation <span class="req uk-text-danger">*</span></label>
                                     <input type="text" class="md-input" name="contact_person_designation" value="{{ old('contact_person_designation') ?: $corporate->contact_person_designation}}">
+                                    @if ($errors->has('contact_person_designation'))
+                                        <span class="uk-form-help-block uk-text-danger">{{ $errors->first('contact_person_designation') }}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="uk-grid">
@@ -514,7 +517,7 @@
                             </div>
                             <div class="uk-grid">
                                 <div class="uk-width-1-1">
-                                    <label>Email Recipient (HR)</label>
+                                    <label>Email Recipient (HR) <span class="req uk-text-danger">*</span></label>
                                     <input type="text" name="hr_email" value="{{ old('hr_email') ?: $corporate->hr_email }}" class="md-input {{ $errors->has('hr_email') ? ' md-input-danger' : '' }}" />
                                     @if ($errors->has('hr_email'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('hr_email') }}</span>
@@ -531,9 +534,11 @@
                             <div class="uk-grid">
                                 <div class="uk-width-2-3">
                                     <label>Tax Identification Number <span class="uk-text-danger">*</span> </label>
-                                    <input type="text" name="tin" value="{{ old('tin') ?: $corporate->tin }}" class="md-input {{ $errors->has('tin') ? ' md-input-danger' : '' }}" />
+                                    <input type="text" name="tin" value="{{ old('tin') ?: $corporate->tin }}" class="md-input masked_input {{ $errors->has('tin') ? 'md-input-danger' : '' }}" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false" />
                                     @if ($errors->has('tin'))
                                         <span class="uk-form-help-block uk-text-danger">{{ $errors->first('tin') }}</span>
+                                    @else
+                                        <span class="uk-form-help-block">For a 9-digit TIN, add '000' at the end</span>
                                     @endif
                                 </div>
                                 <div class="uk-width-1-3">
@@ -545,27 +550,19 @@
                             </div>
                             <div class="uk-grid">
                                 <div class="uk-width-2-3">
-                                    <label>Representative Name <span class="uk-text-danger">*</span> </label>
+                                    <label>Representative Name</label>
                                     <input type="text" name="representative_name" value="{{ old('representative_name') ?: $corporate->representative_name }}" class="md-input {{ $errors->has('representative_name') ? ' md-input-danger' : '' }}" />
-                                    @if ($errors->has('representative_name'))
-                                        <span class="uk-form-help-block uk-text-danger">{{ $errors->first('representative_name') }}</span>
-                                    @endif
                                 </div>
                                 <div class="uk-width-1-3">
-                                    <label>Representative's Position <span class="uk-text-danger">*</span> </label>
+                                    <label>Representative's Position</label>
                                     <input type="text" name="representative_position" value="{{ old('representative_position') ?: $corporate->representative_position }}" class="md-input {{ $errors->has('representative_position') ? ' md-input-danger' : '' }}" />
-                                    @if ($errors->has('representative_position'))
-                                        <span class="uk-form-help-block uk-text-danger">{{ $errors->first('representative_position') }}</span>
-                                    @endif
                                 </div>
                             </div>
                             <div class="uk-grid">
                                 <div class="uk-width-1-1">
-                                    <label>Representative's TIN <span class="uk-text-danger">*</span> </label>
-                                    <input type="text" name="representative_tin" value="{{ old('representative_tin') ?: $corporate->representative_tin }}" class="md-input {{ $errors->has('representative_tin') ? ' md-input-danger' : '' }}" />
-                                    @if ($errors->has('representative_tin'))
-                                        <span class="uk-form-help-block uk-text-danger">{{ $errors->first('representative_tin') }}</span>
-                                    @endif
+                                    <label>Representative's TIN</label>
+                                    <input type="text" name="representative_tin" value="{{ old('representative_tin') ?: $corporate->representative_tin }}" class="md-input masked_input" id="masked_phone" data-inputmask="'mask': '999-999-999-999'" data-inputmask-showmaskonhover="false" />
+                                    <span class="uk-form-help-block">For a 9-digit TIN, add '000' at the end</span>
                                 </div>
                             </div>
                             <div class="uk-grid">

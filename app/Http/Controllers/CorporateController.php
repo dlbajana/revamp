@@ -30,6 +30,11 @@ class CorporateController extends Controller
 
     public function store(Request $request)
     {
+        // Format requests from masked input before the validation
+        $request['philhealth_no'] = str_replace(['-', ','], '', $request->philhealth_no);
+        $request['tin'] = str_replace(['-', ','], '', $request->tin);
+        $request['representative_tin'] = str_replace(['-', ','], '', $request->representative_tin);
+
         $rules = [
             'name' => 'required',
             'card_name' => 'required',
@@ -79,6 +84,13 @@ class CorporateController extends Controller
 
     public function update(Request $request, Corporate $corporate)
     {
+        // Format requests from masked input before the validation
+        $request['philhealth_no'] = str_replace(['-', ','], '', $request->philhealth_no);
+        $request['tin'] = str_replace(['-', ','], '', $request->tin);
+        $request['representative_tin'] = str_replace(['-', ','], '', $request->representative_tin);
+
+        return $request->all();
+
         $request->validate([
             'name' => 'required',
             'card_name' => 'required',

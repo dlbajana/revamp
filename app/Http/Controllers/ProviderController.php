@@ -33,12 +33,16 @@ class ProviderController extends Controller
 
     public function store(Request $request)
     {
+        // Format requests from masked input before the validation
+        $request['tin'] = str_replace(['-', ','], '', $request->tin);
+
         if ($request->tin_from_existing_provider) {
             $validatedProvider = $request->validate([
                 'id' => 'nullable|unique:providers',
                 'name' => 'required|max:255',
                 'business_type' => 'required',
                 'accreditation_status' => 'required',
+                'tin' => 'required',
             ]);
         } else {
             $validatedProvider = $request->validate([
@@ -77,12 +81,16 @@ class ProviderController extends Controller
 
     public function update(Request $request, Provider $provider)
     {
+        // Format requests from masked input before the validation
+        $request['tin'] = str_replace(['-', ','], '', $request->tin);
+
         if ($request->tin_from_existing_provider) {
             $validatedProvider = $request->validate([
                 'id' => 'nullable|unique:providers',
                 'name' => 'required|max:255',
                 'business_type' => 'required',
                 'accreditation_status' => 'required',
+                'tin' => 'required',
             ]);
         } else {
             $validatedProvider = $request->validate([
@@ -115,7 +123,6 @@ class ProviderController extends Controller
                         );
                     }
                 }
-
             }
         }
 
