@@ -19,9 +19,10 @@ class CreatePlansTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('limit');
-            $table->integer('intervening_period')->default(0);
+            $table->integer('intervening_period')->nullable();
             $table->tinyInteger('shared_limit')->default(0);
-            $table->tinyInteger('cover_prexisting')->default(0);
+            $table->tinyInteger('cover_preexisting')->default(0);
+            $table->string('status');                                           // VALUE: active, inactive
 
             $table->decimal('copay_company', 10, 2);
             $table->decimal('copay_member', 10, 2);
