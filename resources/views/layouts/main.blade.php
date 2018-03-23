@@ -289,7 +289,7 @@
                     <ul>
                         <li class="@yield('nav_corporate_corporate_accounts')"><a href="{{ route('corporates.index') }}">Corporate Accounts</a></li>
                         <li class="@yield('nav_corporate_members')"><a href="#">Members</a></li>
-                        <li class="@yield('nav_corporate_plans')"><a href="#">Plans & Coverage</a></li>
+                        <li class="@yield('nav_corporate_plans')"><a href="{{ route('plans.index') }}">Plans & Coverage</a></li>
                     </ul>
                 </li>
                 <li class="@yield('nav_ape_scheduler')" title="APE Scheduler">
@@ -313,7 +313,7 @@
                 <li class="@yield('nav_users_management')" title="User Management">
                     <a href="{{ route('users.index') }}">
                         <span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>
-                        <span class="menu_title">Users Management </span>
+                        <span class="menu_title">Users Management</span>
                     </a>
                 </li>
                 <li class="@yield('nav_system_settings')" title="SystemSettings">

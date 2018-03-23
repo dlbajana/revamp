@@ -52,3 +52,10 @@ Route::post('corporates/{corporate}/add_fund', 'CorporateController@addFund')->n
 Route::post('corporates/{corporate}/action', 'CorporateController@action')->name('corporates.action');
 Route::get('corporates/{corporate}/print', 'CorporateController@printDocument')->name('corporates.print');
 Route::resource('corporates', 'CorporateController');
+
+/*
+|--------------------------------------------------------------------------
+| PLAN
+|--------------------------------------------------------------------------
+*/
+Route::resource('plans', 'PlanController');

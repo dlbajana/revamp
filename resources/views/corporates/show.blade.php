@@ -23,7 +23,8 @@
         <div class="user_heading">
             <div class="user_heading_menu hidden-print">
                 <div class="uk-display-inline-block" data-uk-modal="{target:'#modal_update_status'}" data-uk-tooltip="{pos:'bottom'}" title="Update Status"><i class="md-icon md-icon-light material-icons">&#xE3A0;</i></div>
-                <div class="uk-display-inline-block"  data-uk-modal="{target:'#modal_add_fund'}" data-uk-tooltip="{pos:'bottom'}" title="Add Fund"><i class="md-icon md-icon-light material-icons">&#xE263;</i></div>
+                <div class="uk-display-inline-block" data-uk-modal="{target:'#modal_add_fund'}" data-uk-tooltip="{pos:'bottom'}" title="Add Fund"><i class="md-icon md-icon-light material-icons">&#xE263;</i></div>
+                <div class="uk-display-inline-block" data-uk-tooltip="{pos:'bottom'}" title="New Plan"><i class="md-icon md-icon-light material-icons" id="new_plan">&#xE02E;</i></div>
                 <div class="uk-display-inline-block" data-uk-tooltip="{pos:'bottom'}" title="Print"><i class="md-icon md-icon-light material-icons" id="corporate_print">&#xE8ad;</i></div>
             </div>
             <div class="user_heading_avatar">
@@ -513,6 +514,24 @@
                 }, {
                     labels: {
                         'Ok': 'print'
+                    }
+                });
+            });
+
+            $body.on('click','#new_plan',function(e) {
+                e.preventDefault();
+                UIkit.modal.confirm('Create a new Plan for this Provider?', function () {
+                    var win = window.open('{{ route('plans.create', ['corporate_id' => $corporate->id]) }}', '_blank');
+                    if (win) {
+                        //Browser has allowed it to be opened
+                        win.focus();
+                    } else {
+                        //Browser has blocked it
+                        alert('Please allow popups for this website');
+                    }
+                }, {
+                    labels: {
+                        'Ok': 'Create Plan'
                     }
                 });
             });
