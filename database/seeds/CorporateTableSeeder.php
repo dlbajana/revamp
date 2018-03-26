@@ -34,7 +34,7 @@ class CorporateTableSeeder extends Seeder
                     'shared_limit' => $faker->randomElement([0, 1]),
                     'cover_preexisting' => $faker->randomElement([0, 1]),
                     'status' => 'active',
-                    'copay_company' => 0.1,
+                    'copay_company' => 1,
                     'copay_member' => 0,
                     'start_date' => Carbon::now(),
                     'end_date' => Carbon::now()->addYear(),
